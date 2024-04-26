@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bwastartup/app/entity"
 	"bwastartup/app/repository"
 	"bwastartup/dto"
 	"context"
@@ -8,6 +9,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"time"
 )
 
 func main() {
@@ -50,6 +52,26 @@ func main() {
 
 	oneuser, err := u.User.First()
 	fmt.Println(oneuser.Name)
+
+	where_user, err := u.User.Where(u.User.ID.Eq(1)).First()
+	fmt.Println(where_user.Name)
+
+	params_insert := entity.User{
+
+		Name:           "ucupaditbakso",
+		Occupation:     "it",
+		Email:          "ucup@test.com",
+		PasswordHash:   "test",
+		AvatarFileName: "test.png",
+		Role:           "admin",
+		Token:          "test",
+		CreatedAt:      time.Time{},
+		UpdatedAt:      time.Time{},
+	}
+	err = u.User.Save(&params_insert)
+	result, err := u.User.Last()
+	fmt.Println(result.Name)
+
 	//end dao user
 
 }
