@@ -1,38 +1,30 @@
 package main
 
 import (
+	"bwastartup/app/database"
 	"bwastartup/app/entity"
 	"bwastartup/app/repository"
 	"bwastartup/dto"
 	"context"
 	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"log"
 	"time"
 )
 
 func main() {
-	dsn := "root:secret@tcp(127.0.0.1:3306)/bwa?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	fmt.Println("connection database success !!")
+	database.Connect()
 
 	//standart gorm
 	var users []dto.Users
-	db.Find(&users)
+	database.DB.Find(&users)
 	for _, list := range users {
 		fmt.Println(list.Name.String)
 
 	}
 
 	//init database using in gorm generate
-	u := repository.Use(db)
+	u := repository.Use(database.DB)
 	//using DAO User
 	listUser, err := u.User.WithContext(context.Background()).Find()
 	//fmt.Println(listUser.Name)
@@ -66,7 +58,7 @@ func main() {
 	result, err := u.User.Last()
 	fmt.Println("hasil result ", *result)
 
-	//db.Model(&users).Clauses(clause.Returning{}).Where("role = ?", "admin").Update("salary", gorm.Expr("salary * ?", 2))
+	//database.DB.Model(&users).Clauses(clause.Returning{}).Where("role = ?", "admin").Update("salary", gorm.Expr("salary * ?", 2))
 
 	params_update := entity.User{Name: "budi"}
 	update_user, err := u.User.Where(u.User.ID.Eq(1)).Updates(&params_update)
