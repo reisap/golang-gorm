@@ -4,7 +4,7 @@ import (
 	"bwastartup/app/database"
 	"bwastartup/app/entity"
 	"bwastartup/app/model"
-	"bwastartup/dto"
+	"bwastartup/sql/dto"
 	"context"
 	"fmt"
 	"gorm.io/gorm/clause"
