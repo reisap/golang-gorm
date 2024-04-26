@@ -16,14 +16,14 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"bwastartup/entity/model"
+	"bwastartup/model/entity"
 )
 
 func newCampaign(db *gorm.DB, opts ...gen.DOOption) campaign {
 	_campaign := campaign{}
 
 	_campaign.campaignDo.UseDB(db, opts...)
-	_campaign.campaignDo.UseModel(&model.Campaign{})
+	_campaign.campaignDo.UseModel(&entity.Campaign{})
 
 	tableName := _campaign.campaignDo.TableName()
 	_campaign.ALL = field.NewAsterisk(tableName)
@@ -95,7 +95,7 @@ func (c *campaign) updateTableName(table string) *campaign {
 	return c
 }
 
-func (c *campaign) WithContext(ctx context.Context) *campaignDo { return c.campaignDo.WithContext(ctx) }
+func (c *campaign) WithContext(ctx context.Context) ICampaignDo { return c.campaignDo.WithContext(ctx) }
 
 func (c campaign) TableName() string { return c.campaignDo.TableName() }
 
@@ -140,149 +140,210 @@ func (c campaign) replaceDB(db *gorm.DB) campaign {
 
 type campaignDo struct{ gen.DO }
 
-func (c campaignDo) Debug() *campaignDo {
+type ICampaignDo interface {
+	gen.SubQuery
+	Debug() ICampaignDo
+	WithContext(ctx context.Context) ICampaignDo
+	WithResult(fc func(tx gen.Dao)) gen.ResultInfo
+	ReplaceDB(db *gorm.DB)
+	ReadDB() ICampaignDo
+	WriteDB() ICampaignDo
+	As(alias string) gen.Dao
+	Session(config *gorm.Session) ICampaignDo
+	Columns(cols ...field.Expr) gen.Columns
+	Clauses(conds ...clause.Expression) ICampaignDo
+	Not(conds ...gen.Condition) ICampaignDo
+	Or(conds ...gen.Condition) ICampaignDo
+	Select(conds ...field.Expr) ICampaignDo
+	Where(conds ...gen.Condition) ICampaignDo
+	Order(conds ...field.Expr) ICampaignDo
+	Distinct(cols ...field.Expr) ICampaignDo
+	Omit(cols ...field.Expr) ICampaignDo
+	Join(table schema.Tabler, on ...field.Expr) ICampaignDo
+	LeftJoin(table schema.Tabler, on ...field.Expr) ICampaignDo
+	RightJoin(table schema.Tabler, on ...field.Expr) ICampaignDo
+	Group(cols ...field.Expr) ICampaignDo
+	Having(conds ...gen.Condition) ICampaignDo
+	Limit(limit int) ICampaignDo
+	Offset(offset int) ICampaignDo
+	Count() (count int64, err error)
+	Scopes(funcs ...func(gen.Dao) gen.Dao) ICampaignDo
+	Unscoped() ICampaignDo
+	Create(values ...*entity.Campaign) error
+	CreateInBatches(values []*entity.Campaign, batchSize int) error
+	Save(values ...*entity.Campaign) error
+	First() (*entity.Campaign, error)
+	Take() (*entity.Campaign, error)
+	Last() (*entity.Campaign, error)
+	Find() ([]*entity.Campaign, error)
+	FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*entity.Campaign, err error)
+	FindInBatches(result *[]*entity.Campaign, batchSize int, fc func(tx gen.Dao, batch int) error) error
+	Pluck(column field.Expr, dest interface{}) error
+	Delete(...*entity.Campaign) (info gen.ResultInfo, err error)
+	Update(column field.Expr, value interface{}) (info gen.ResultInfo, err error)
+	UpdateSimple(columns ...field.AssignExpr) (info gen.ResultInfo, err error)
+	Updates(value interface{}) (info gen.ResultInfo, err error)
+	UpdateColumn(column field.Expr, value interface{}) (info gen.ResultInfo, err error)
+	UpdateColumnSimple(columns ...field.AssignExpr) (info gen.ResultInfo, err error)
+	UpdateColumns(value interface{}) (info gen.ResultInfo, err error)
+	UpdateFrom(q gen.SubQuery) gen.Dao
+	Attrs(attrs ...field.AssignExpr) ICampaignDo
+	Assign(attrs ...field.AssignExpr) ICampaignDo
+	Joins(fields ...field.RelationField) ICampaignDo
+	Preload(fields ...field.RelationField) ICampaignDo
+	FirstOrInit() (*entity.Campaign, error)
+	FirstOrCreate() (*entity.Campaign, error)
+	FindByPage(offset int, limit int) (result []*entity.Campaign, count int64, err error)
+	ScanByPage(result interface{}, offset int, limit int) (count int64, err error)
+	Scan(result interface{}) (err error)
+	Returning(value interface{}, columns ...string) ICampaignDo
+	UnderlyingDB() *gorm.DB
+	schema.Tabler
+}
+
+func (c campaignDo) Debug() ICampaignDo {
 	return c.withDO(c.DO.Debug())
 }
 
-func (c campaignDo) WithContext(ctx context.Context) *campaignDo {
+func (c campaignDo) WithContext(ctx context.Context) ICampaignDo {
 	return c.withDO(c.DO.WithContext(ctx))
 }
 
-func (c campaignDo) ReadDB() *campaignDo {
+func (c campaignDo) ReadDB() ICampaignDo {
 	return c.Clauses(dbresolver.Read)
 }
 
-func (c campaignDo) WriteDB() *campaignDo {
+func (c campaignDo) WriteDB() ICampaignDo {
 	return c.Clauses(dbresolver.Write)
 }
 
-func (c campaignDo) Session(config *gorm.Session) *campaignDo {
+func (c campaignDo) Session(config *gorm.Session) ICampaignDo {
 	return c.withDO(c.DO.Session(config))
 }
 
-func (c campaignDo) Clauses(conds ...clause.Expression) *campaignDo {
+func (c campaignDo) Clauses(conds ...clause.Expression) ICampaignDo {
 	return c.withDO(c.DO.Clauses(conds...))
 }
 
-func (c campaignDo) Returning(value interface{}, columns ...string) *campaignDo {
+func (c campaignDo) Returning(value interface{}, columns ...string) ICampaignDo {
 	return c.withDO(c.DO.Returning(value, columns...))
 }
 
-func (c campaignDo) Not(conds ...gen.Condition) *campaignDo {
+func (c campaignDo) Not(conds ...gen.Condition) ICampaignDo {
 	return c.withDO(c.DO.Not(conds...))
 }
 
-func (c campaignDo) Or(conds ...gen.Condition) *campaignDo {
+func (c campaignDo) Or(conds ...gen.Condition) ICampaignDo {
 	return c.withDO(c.DO.Or(conds...))
 }
 
-func (c campaignDo) Select(conds ...field.Expr) *campaignDo {
+func (c campaignDo) Select(conds ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Select(conds...))
 }
 
-func (c campaignDo) Where(conds ...gen.Condition) *campaignDo {
+func (c campaignDo) Where(conds ...gen.Condition) ICampaignDo {
 	return c.withDO(c.DO.Where(conds...))
 }
 
-func (c campaignDo) Order(conds ...field.Expr) *campaignDo {
+func (c campaignDo) Order(conds ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Order(conds...))
 }
 
-func (c campaignDo) Distinct(cols ...field.Expr) *campaignDo {
+func (c campaignDo) Distinct(cols ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Distinct(cols...))
 }
 
-func (c campaignDo) Omit(cols ...field.Expr) *campaignDo {
+func (c campaignDo) Omit(cols ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Omit(cols...))
 }
 
-func (c campaignDo) Join(table schema.Tabler, on ...field.Expr) *campaignDo {
+func (c campaignDo) Join(table schema.Tabler, on ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Join(table, on...))
 }
 
-func (c campaignDo) LeftJoin(table schema.Tabler, on ...field.Expr) *campaignDo {
+func (c campaignDo) LeftJoin(table schema.Tabler, on ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.LeftJoin(table, on...))
 }
 
-func (c campaignDo) RightJoin(table schema.Tabler, on ...field.Expr) *campaignDo {
+func (c campaignDo) RightJoin(table schema.Tabler, on ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.RightJoin(table, on...))
 }
 
-func (c campaignDo) Group(cols ...field.Expr) *campaignDo {
+func (c campaignDo) Group(cols ...field.Expr) ICampaignDo {
 	return c.withDO(c.DO.Group(cols...))
 }
 
-func (c campaignDo) Having(conds ...gen.Condition) *campaignDo {
+func (c campaignDo) Having(conds ...gen.Condition) ICampaignDo {
 	return c.withDO(c.DO.Having(conds...))
 }
 
-func (c campaignDo) Limit(limit int) *campaignDo {
+func (c campaignDo) Limit(limit int) ICampaignDo {
 	return c.withDO(c.DO.Limit(limit))
 }
 
-func (c campaignDo) Offset(offset int) *campaignDo {
+func (c campaignDo) Offset(offset int) ICampaignDo {
 	return c.withDO(c.DO.Offset(offset))
 }
 
-func (c campaignDo) Scopes(funcs ...func(gen.Dao) gen.Dao) *campaignDo {
+func (c campaignDo) Scopes(funcs ...func(gen.Dao) gen.Dao) ICampaignDo {
 	return c.withDO(c.DO.Scopes(funcs...))
 }
 
-func (c campaignDo) Unscoped() *campaignDo {
+func (c campaignDo) Unscoped() ICampaignDo {
 	return c.withDO(c.DO.Unscoped())
 }
 
-func (c campaignDo) Create(values ...*model.Campaign) error {
+func (c campaignDo) Create(values ...*entity.Campaign) error {
 	if len(values) == 0 {
 		return nil
 	}
 	return c.DO.Create(values)
 }
 
-func (c campaignDo) CreateInBatches(values []*model.Campaign, batchSize int) error {
+func (c campaignDo) CreateInBatches(values []*entity.Campaign, batchSize int) error {
 	return c.DO.CreateInBatches(values, batchSize)
 }
 
 // Save : !!! underlying implementation is different with GORM
 // The method is equivalent to executing the statement: db.Clauses(clause.OnConflict{UpdateAll: true}).Create(values)
-func (c campaignDo) Save(values ...*model.Campaign) error {
+func (c campaignDo) Save(values ...*entity.Campaign) error {
 	if len(values) == 0 {
 		return nil
 	}
 	return c.DO.Save(values)
 }
 
-func (c campaignDo) First() (*model.Campaign, error) {
+func (c campaignDo) First() (*entity.Campaign, error) {
 	if result, err := c.DO.First(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.Campaign), nil
+		return result.(*entity.Campaign), nil
 	}
 }
 
-func (c campaignDo) Take() (*model.Campaign, error) {
+func (c campaignDo) Take() (*entity.Campaign, error) {
 	if result, err := c.DO.Take(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.Campaign), nil
+		return result.(*entity.Campaign), nil
 	}
 }
 
-func (c campaignDo) Last() (*model.Campaign, error) {
+func (c campaignDo) Last() (*entity.Campaign, error) {
 	if result, err := c.DO.Last(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.Campaign), nil
+		return result.(*entity.Campaign), nil
 	}
 }
 
-func (c campaignDo) Find() ([]*model.Campaign, error) {
+func (c campaignDo) Find() ([]*entity.Campaign, error) {
 	result, err := c.DO.Find()
-	return result.([]*model.Campaign), err
+	return result.([]*entity.Campaign), err
 }
 
-func (c campaignDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*model.Campaign, err error) {
-	buf := make([]*model.Campaign, 0, batchSize)
+func (c campaignDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*entity.Campaign, err error) {
+	buf := make([]*entity.Campaign, 0, batchSize)
 	err = c.DO.FindInBatches(&buf, batchSize, func(tx gen.Dao, batch int) error {
 		defer func() { results = append(results, buf...) }()
 		return fc(tx, batch)
@@ -290,49 +351,49 @@ func (c campaignDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) er
 	return results, err
 }
 
-func (c campaignDo) FindInBatches(result *[]*model.Campaign, batchSize int, fc func(tx gen.Dao, batch int) error) error {
+func (c campaignDo) FindInBatches(result *[]*entity.Campaign, batchSize int, fc func(tx gen.Dao, batch int) error) error {
 	return c.DO.FindInBatches(result, batchSize, fc)
 }
 
-func (c campaignDo) Attrs(attrs ...field.AssignExpr) *campaignDo {
+func (c campaignDo) Attrs(attrs ...field.AssignExpr) ICampaignDo {
 	return c.withDO(c.DO.Attrs(attrs...))
 }
 
-func (c campaignDo) Assign(attrs ...field.AssignExpr) *campaignDo {
+func (c campaignDo) Assign(attrs ...field.AssignExpr) ICampaignDo {
 	return c.withDO(c.DO.Assign(attrs...))
 }
 
-func (c campaignDo) Joins(fields ...field.RelationField) *campaignDo {
+func (c campaignDo) Joins(fields ...field.RelationField) ICampaignDo {
 	for _, _f := range fields {
 		c = *c.withDO(c.DO.Joins(_f))
 	}
 	return &c
 }
 
-func (c campaignDo) Preload(fields ...field.RelationField) *campaignDo {
+func (c campaignDo) Preload(fields ...field.RelationField) ICampaignDo {
 	for _, _f := range fields {
 		c = *c.withDO(c.DO.Preload(_f))
 	}
 	return &c
 }
 
-func (c campaignDo) FirstOrInit() (*model.Campaign, error) {
+func (c campaignDo) FirstOrInit() (*entity.Campaign, error) {
 	if result, err := c.DO.FirstOrInit(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.Campaign), nil
+		return result.(*entity.Campaign), nil
 	}
 }
 
-func (c campaignDo) FirstOrCreate() (*model.Campaign, error) {
+func (c campaignDo) FirstOrCreate() (*entity.Campaign, error) {
 	if result, err := c.DO.FirstOrCreate(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.Campaign), nil
+		return result.(*entity.Campaign), nil
 	}
 }
 
-func (c campaignDo) FindByPage(offset int, limit int) (result []*model.Campaign, count int64, err error) {
+func (c campaignDo) FindByPage(offset int, limit int) (result []*entity.Campaign, count int64, err error) {
 	result, err = c.Offset(offset).Limit(limit).Find()
 	if err != nil {
 		return
@@ -361,7 +422,7 @@ func (c campaignDo) Scan(result interface{}) (err error) {
 	return c.DO.Scan(result)
 }
 
-func (c campaignDo) Delete(models ...*model.Campaign) (result gen.ResultInfo, err error) {
+func (c campaignDo) Delete(models ...*entity.Campaign) (result gen.ResultInfo, err error) {
 	return c.DO.Delete(models)
 }
 

@@ -15,34 +15,40 @@ import (
 	"gorm.io/plugin/dbresolver"
 )
 
+var (
+	Q        = new(Query)
+	Campaign *campaign
+	User     *user
+)
+
+func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
+	*Q = *Use(db, opts...)
+	Campaign = &Q.Campaign
+	User = &Q.User
+}
+
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      newCampaign(db, opts...),
-		CampaignImage: newCampaignImage(db, opts...),
-		Transaction:   newTransaction(db, opts...),
-		User:          newUser(db, opts...),
+		db:       db,
+		Campaign: newCampaign(db, opts...),
+		User:     newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Campaign      campaign
-	CampaignImage campaignImage
-	Transaction   transaction
-	User          user
+	Campaign campaign
+	User     user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      q.Campaign.clone(db),
-		CampaignImage: q.CampaignImage.clone(db),
-		Transaction:   q.Transaction.clone(db),
-		User:          q.User.clone(db),
+		db:       db,
+		Campaign: q.Campaign.clone(db),
+		User:     q.User.clone(db),
 	}
 }
 
@@ -56,27 +62,21 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      q.Campaign.replaceDB(db),
-		CampaignImage: q.CampaignImage.replaceDB(db),
-		Transaction:   q.Transaction.replaceDB(db),
-		User:          q.User.replaceDB(db),
+		db:       db,
+		Campaign: q.Campaign.replaceDB(db),
+		User:     q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Campaign      *campaignDo
-	CampaignImage *campaignImageDo
-	Transaction   *transactionDo
-	User          *userDo
+	Campaign ICampaignDo
+	User     IUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Campaign:      q.Campaign.WithContext(ctx),
-		CampaignImage: q.CampaignImage.WithContext(ctx),
-		Transaction:   q.Transaction.WithContext(ctx),
-		User:          q.User.WithContext(ctx),
+		Campaign: q.Campaign.WithContext(ctx),
+		User:     q.User.WithContext(ctx),
 	}
 }
 
