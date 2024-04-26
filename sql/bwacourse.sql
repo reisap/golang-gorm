@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `id` bigserial PRIMARY KEY,
   `name` varchar(100) NOT NULL,
   `occupation` varchar(100) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `campaign_images` (
   `updated_at` datetime NOT NULL DEFAULT (now())
 );
 
-CREATE TABLE `transactions` (
+CREATE TABLE `transaction` (
   `id` bigserial PRIMARY KEY,
   `user_id` int NOT NULL,
   `campaign_id` int NOT NULL,
@@ -45,10 +45,10 @@ CREATE TABLE `transactions` (
   `updated_at` datetime NOT NULL DEFAULT (now())
 );
 
-ALTER TABLE `campaign` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `campaign` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `campaign_images` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaign` (`id`);
 
-ALTER TABLE `transactions` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `transaction` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `transactions` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaign` (`id`);
+ALTER TABLE `transaction` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaign` (`id`);

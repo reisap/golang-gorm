@@ -10,8 +10,8 @@ import (
 
 func main() {
 	g := gen.NewGenerator(gen.Config{
-		OutPath:        "./model/repository",
-		WithUnitTest:   true,
+		OutPath: "./model/repository",
+		//WithUnitTest:   true,
 		ModelPkgPath:   "entity",
 		FieldNullable:  false,
 		FieldCoverable: true,
@@ -31,7 +31,7 @@ func main() {
 		g.GenerateModel("users"),
 		//g.GenerateModel("transactions"),
 		g.GenerateModel("campaigns"),
-		//g.GenerateModel("campaign_images"),
+		g.GenerateModel("campaign_images"),
 	)
 	g.Execute()
 }

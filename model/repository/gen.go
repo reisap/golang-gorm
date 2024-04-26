@@ -16,39 +16,44 @@ import (
 )
 
 var (
-	Q        = new(Query)
-	Campaign *campaign
-	User     *user
+	Q             = new(Query)
+	Campaign      *campaign
+	CampaignImage *campaignImage
+	User          *user
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Campaign = &Q.Campaign
+	CampaignImage = &Q.CampaignImage
 	User = &Q.User
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:       db,
-		Campaign: newCampaign(db, opts...),
-		User:     newUser(db, opts...),
+		db:            db,
+		Campaign:      newCampaign(db, opts...),
+		CampaignImage: newCampaignImage(db, opts...),
+		User:          newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Campaign campaign
-	User     user
+	Campaign      campaign
+	CampaignImage campaignImage
+	User          user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		Campaign: q.Campaign.clone(db),
-		User:     q.User.clone(db),
+		db:            db,
+		Campaign:      q.Campaign.clone(db),
+		CampaignImage: q.CampaignImage.clone(db),
+		User:          q.User.clone(db),
 	}
 }
 
@@ -62,21 +67,24 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		Campaign: q.Campaign.replaceDB(db),
-		User:     q.User.replaceDB(db),
+		db:            db,
+		Campaign:      q.Campaign.replaceDB(db),
+		CampaignImage: q.CampaignImage.replaceDB(db),
+		User:          q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Campaign ICampaignDo
-	User     IUserDo
+	Campaign      ICampaignDo
+	CampaignImage ICampaignImageDo
+	User          IUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Campaign: q.Campaign.WithContext(ctx),
-		User:     q.User.WithContext(ctx),
+		Campaign:      q.Campaign.WithContext(ctx),
+		CampaignImage: q.CampaignImage.WithContext(ctx),
+		User:          q.User.WithContext(ctx),
 	}
 }
 
