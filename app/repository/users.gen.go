@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"bwastartup/model/entity"
+	"bwastartup/app/entity"
 )
 
 func newUser(db *gorm.DB, opts ...gen.DOOption) user {

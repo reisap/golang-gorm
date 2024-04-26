@@ -10,7 +10,7 @@ import (
 
 func main() {
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./model/repository",
+		OutPath: "./app/repository",
 		//WithUnitTest:   true,
 		ModelPkgPath:   "entity",
 		FieldNullable:  false,

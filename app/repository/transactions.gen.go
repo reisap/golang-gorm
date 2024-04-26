@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"bwastartup/model/entity"
+	"bwastartup/app/entity"
 )
 
 func newTransactions_table(db *gorm.DB, opts ...gen.DOOption) transactions_table {

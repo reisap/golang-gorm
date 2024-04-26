@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"bwastartup/model/entity"
+	"bwastartup/app/entity"
 )
 
 func newCampaignImage(db *gorm.DB, opts ...gen.DOOption) campaignImage {
