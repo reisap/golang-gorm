@@ -1,6 +1,6 @@
 package dto
 
-type SchemaMigrationsEntity struct {
+type SchemaMigrations struct {
 	Version int `db:"version"`
 	Dirty   int `db:"dirty"`
 }

@@ -9,6 +9,13 @@ generate table into struct
 ```
 go install github.com/fraenky8/tables-to-go@master
 
-tables-to-go -v -of ./dto -t mysql -h 127.0.0.1 -d bwa -u root -p secret -pn dto -suf _entity
+tables-to-go -v -of ./dto -t mysql -h 127.0.0.1 -d bwa -u root -p secret -pn dto
+
+```
+
+generate with generatedb.go with package "gorm.io/gen"
+
+```
+    go run generatedb.go
 
 ```

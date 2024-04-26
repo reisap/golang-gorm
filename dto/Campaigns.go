@@ -4,7 +4,7 @@ import (
 	"database/sql"
 )
 
-type CampaignsEntity struct {
+type Campaigns struct {
 	ID               int            `db:"id"`
 	UserID           sql.NullInt64  `db:"user_id"`
 	Name             sql.NullString `db:"name"`

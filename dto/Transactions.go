@@ -4,7 +4,7 @@ import (
 	"database/sql"
 )
 
-type TransactionsEntity struct {
+type Transactions struct {
 	ID         int            `db:"id"`
 	CampaignID sql.NullInt64  `db:"campaign_id"`
 	UserID     sql.NullInt64  `db:"user_id"`

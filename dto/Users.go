@@ -4,7 +4,7 @@ import (
 	"database/sql"
 )
 
-type UsersEntity struct {
+type Users struct {
 	ID             int            `db:"id"`
 	Name           sql.NullString `db:"name"`
 	Occupation     sql.NullString `db:"occupation"`

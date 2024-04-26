@@ -10,11 +10,11 @@ import (
 
 func main() {
 	g := gen.NewGenerator(gen.Config{
-		OutPath:        "./query",
-		WithUnitTest:   true,
+		OutPath: "./entity/repository",
+		//WithUnitTest:   true,
 		FieldNullable:  true,
 		FieldCoverable: true,
-		Mode:           gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
+		//Mode:           gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
 	})
 
 	dsn := "root:secret@tcp(127.0.0.1:3306)/bwa?charset=utf8mb4&parseTime=True&loc=Local"
