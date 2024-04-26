@@ -15,6 +15,7 @@ func SetupRedis() {
 		Addr: "redis:6379",
 		DB:   0,
 	})
+	fmt.Println("Redis connected")
 }
 
 func SetupCacheChannel() {
