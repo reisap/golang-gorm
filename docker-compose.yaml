@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:5.7.22
+    restart: always
+    environment:
+      MYSQL_DATABASE: bwa
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
