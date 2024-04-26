@@ -1,8 +1,8 @@
 package main
 
 import (
+	"bwastartup/app/repository"
 	"bwastartup/dto"
-	"bwastartup/model/repository"
 	"context"
 	"fmt"
 	"gorm.io/driver/mysql"
