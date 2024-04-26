@@ -3,7 +3,7 @@ package main
 import (
 	"bwastartup/app/database"
 	"bwastartup/app/entity"
-	"bwastartup/app/repository"
+	"bwastartup/app/model"
 	"bwastartup/dto"
 	"context"
 	"fmt"
@@ -24,7 +24,7 @@ func main() {
 	}
 
 	//init database using in gorm generate
-	u := repository.Use(database.DB)
+	u := model.Use(database.DB)
 	//using DAO User
 	listUser, err := u.User.WithContext(context.Background()).Find()
 	//fmt.Println(listUser.Name)
