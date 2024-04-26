@@ -38,13 +38,11 @@ func main() {
 	//fmt.Println(listUser.Name)
 	for _, list := range listUser {
 		fmt.Println(list.Name)
-
 	}
 
 	user, err := u.User.Find()
 	for _, list := range user {
 		fmt.Println(list.Name)
-
 	}
 
 	oneuser, err := u.User.First()
@@ -54,7 +52,6 @@ func main() {
 	fmt.Println(where_user.Name)
 
 	params_insert := entity.User{
-
 		Name:           "ucupaditbakso",
 		Occupation:     "it",
 		Email:          "ucup@test.com",
