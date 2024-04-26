@@ -4,7 +4,7 @@ migrate command
 migrate create -ext sql -dir sql/migration -seq init_schema
 ```
 
-generate table into struct
+generate table into struct (tapi ini cara standart karena tetap manual buat functionnya)
 
 ```
 go install github.com/fraenky8/tables-to-go@master
