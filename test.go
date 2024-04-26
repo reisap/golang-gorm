@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"log"
 	"time"
 )
@@ -23,16 +24,11 @@ func main() {
 	fmt.Println("connection database success !!")
 
 	var users []dto.Users
-	length := len(users)
-	fmt.Println(length)
 	db.Find(&users)
-	length = len(users)
-	fmt.Println(length)
-
-	//for _, list := range users {
-	//	fmt.Println(list.Name.String)
-	//	fmt.Println(list.Email.String)
-	//}
+	for _, list := range users {
+		fmt.Println(list.Name.String)
+		fmt.Println(list.Email.String)
+	}
 
 	//init database using in gorm generate
 	u := repository.Use(db)
@@ -68,9 +64,22 @@ func main() {
 		CreatedAt:      time.Time{},
 		UpdatedAt:      time.Time{},
 	}
-	err = u.User.Save(&params_insert)
+	err = u.User.Clauses(clause.Returning{}).Save(&params_insert)
 	result, err := u.User.Last()
 	fmt.Println(result.Name)
+
+	//db.Model(&users).Clauses(clause.Returning{}).Where("role = ?", "admin").Update("salary", gorm.Expr("salary * ?", 2))
+
+	params_update := entity.User{Name: "budi"}
+	update_user, err := u.User.Where(u.User.ID.Eq(1)).Updates(&params_update)
+	//update_user, err := u.User.Clauses(clause.Returning{}).Where(u.User.ID.Eq(1)).Update(u.User.Name, "joko")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	result_update, err := u.User.Where(u.User.ID.Eq(1)).First()
+	fmt.Println(update_user)
+	fmt.Println(&params_update)
+	fmt.Println(*result_update)
 
 	//end dao user
 
