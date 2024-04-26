@@ -23,11 +23,12 @@ func main() {
 
 	fmt.Println("connection database success !!")
 
+	//standart gorm
 	var users []dto.Users
 	db.Find(&users)
 	for _, list := range users {
 		fmt.Println(list.Name.String)
-		fmt.Println(list.Email.String)
+
 	}
 
 	//init database using in gorm generate
@@ -37,13 +38,13 @@ func main() {
 	//fmt.Println(listUser.Name)
 	for _, list := range listUser {
 		fmt.Println(list.Name)
-		fmt.Println(list.Email)
+
 	}
 
 	user, err := u.User.Find()
 	for _, list := range user {
 		fmt.Println(list.Name)
-		fmt.Println(list.Email)
+
 	}
 
 	oneuser, err := u.User.First()
@@ -66,7 +67,7 @@ func main() {
 	}
 	err = u.User.Clauses(clause.Returning{}).Save(&params_insert)
 	result, err := u.User.Last()
-	fmt.Println(result.Name)
+	fmt.Println("hasil result ", *result)
 
 	//db.Model(&users).Clauses(clause.Returning{}).Where("role = ?", "admin").Update("salary", gorm.Expr("salary * ?", 2))
 
@@ -81,6 +82,12 @@ func main() {
 	fmt.Println(&params_update)
 	fmt.Println(*result_update)
 
+	result_delete, err := u.User.Where(u.User.ID.Eq(46)).Delete()
+	//disini walau id nya sebenarnya sudah dihapus tidak mengeluarkan error berbeda dengan fungsi update yang akan mengeluarkan error jika id tidak ketemu
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Println(result_delete.Error)
 	//end dao user
 
 }
