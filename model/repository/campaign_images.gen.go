@@ -40,7 +40,7 @@ func newCampaignImage(db *gorm.DB, opts ...gen.DOOption) campaignImage {
 }
 
 type campaignImage struct {
-	campaignImageDo campaignImageDo
+	campaignImageDo
 
 	ALL        field.Asterisk
 	ID         field.Int32
@@ -75,18 +75,6 @@ func (c *campaignImage) updateTableName(table string) *campaignImage {
 	c.fillFieldMap()
 
 	return c
-}
-
-func (c *campaignImage) WithContext(ctx context.Context) ICampaignImageDo {
-	return c.campaignImageDo.WithContext(ctx)
-}
-
-func (c campaignImage) TableName() string { return c.campaignImageDo.TableName() }
-
-func (c campaignImage) Alias() string { return c.campaignImageDo.Alias() }
-
-func (c campaignImage) Columns(cols ...field.Expr) gen.Columns {
-	return c.campaignImageDo.Columns(cols...)
 }
 
 func (c *campaignImage) GetFieldByName(fieldName string) (field.OrderExpr, bool) {

@@ -46,7 +46,7 @@ func newCampaign(db *gorm.DB, opts ...gen.DOOption) campaign {
 }
 
 type campaign struct {
-	campaignDo campaignDo
+	campaignDo
 
 	ALL              field.Asterisk
 	ID               field.Int32
@@ -94,14 +94,6 @@ func (c *campaign) updateTableName(table string) *campaign {
 
 	return c
 }
-
-func (c *campaign) WithContext(ctx context.Context) ICampaignDo { return c.campaignDo.WithContext(ctx) }
-
-func (c campaign) TableName() string { return c.campaignDo.TableName() }
-
-func (c campaign) Alias() string { return c.campaignDo.Alias() }
-
-func (c campaign) Columns(cols ...field.Expr) gen.Columns { return c.campaignDo.Columns(cols...) }
 
 func (c *campaign) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := c.fieldMap[fieldName]

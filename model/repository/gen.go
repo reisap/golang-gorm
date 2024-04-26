@@ -16,44 +16,49 @@ import (
 )
 
 var (
-	Q             = new(Query)
-	Campaign      *campaign
-	CampaignImage *campaignImage
-	User          *user
+	Q                  = new(Query)
+	Campaign           *campaign
+	CampaignImage      *campaignImage
+	Transactions_table *transactions_table
+	User               *user
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Campaign = &Q.Campaign
 	CampaignImage = &Q.CampaignImage
+	Transactions_table = &Q.Transactions_table
 	User = &Q.User
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      newCampaign(db, opts...),
-		CampaignImage: newCampaignImage(db, opts...),
-		User:          newUser(db, opts...),
+		db:                 db,
+		Campaign:           newCampaign(db, opts...),
+		CampaignImage:      newCampaignImage(db, opts...),
+		Transactions_table: newTransactions_table(db, opts...),
+		User:               newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Campaign      campaign
-	CampaignImage campaignImage
-	User          user
+	Campaign           campaign
+	CampaignImage      campaignImage
+	Transactions_table transactions_table
+	User               user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      q.Campaign.clone(db),
-		CampaignImage: q.CampaignImage.clone(db),
-		User:          q.User.clone(db),
+		db:                 db,
+		Campaign:           q.Campaign.clone(db),
+		CampaignImage:      q.CampaignImage.clone(db),
+		Transactions_table: q.Transactions_table.clone(db),
+		User:               q.User.clone(db),
 	}
 }
 
@@ -67,24 +72,27 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:            db,
-		Campaign:      q.Campaign.replaceDB(db),
-		CampaignImage: q.CampaignImage.replaceDB(db),
-		User:          q.User.replaceDB(db),
+		db:                 db,
+		Campaign:           q.Campaign.replaceDB(db),
+		CampaignImage:      q.CampaignImage.replaceDB(db),
+		Transactions_table: q.Transactions_table.replaceDB(db),
+		User:               q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Campaign      ICampaignDo
-	CampaignImage ICampaignImageDo
-	User          IUserDo
+	Campaign           ICampaignDo
+	CampaignImage      ICampaignImageDo
+	Transactions_table ITransactions_tableDo
+	User               IUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Campaign:      q.Campaign.WithContext(ctx),
-		CampaignImage: q.CampaignImage.WithContext(ctx),
-		User:          q.User.WithContext(ctx),
+		Campaign:           q.Campaign.WithContext(ctx),
+		CampaignImage:      q.CampaignImage.WithContext(ctx),
+		Transactions_table: q.Transactions_table.WithContext(ctx),
+		User:               q.User.WithContext(ctx),
 	}
 }
 

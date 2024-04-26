@@ -32,20 +32,24 @@ func main() {
 	//	fmt.Println(list.Email.String)
 	//}
 
-	////using generate orm gorm
-	//repository.SetDefault(db)
-	//dtoUser := repository.Q.User.WithContext(context.Background()).Debug()
-	//user, err := dtoUser.Find()
-	//fmt.Println(user)
-	////for _, list := range result_user {
-	////	fmt.Println(list.Name)
-	////}
-
-	u := repository.Use(db).User
-	listUser, err := u.WithContext(context.Background()).Find()
+	//init database using in gorm generate
+	u := repository.Use(db)
+	//using DAO User
+	listUser, err := u.User.WithContext(context.Background()).Find()
 	//fmt.Println(listUser.Name)
 	for _, list := range listUser {
 		fmt.Println(list.Name)
 		fmt.Println(list.Email)
 	}
+
+	user, err := u.User.Find()
+	for _, list := range user {
+		fmt.Println(list.Name)
+		fmt.Println(list.Email)
+	}
+
+	oneuser, err := u.User.First()
+	fmt.Println(oneuser.Name)
+	//end dao user
+
 }
