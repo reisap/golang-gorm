@@ -9,7 +9,7 @@ generate table into struct (tapi ini cara standart karena tetap manual buat func
 ```
 go install github.com/fraenky8/tables-to-go@master
 
-tables-to-go -v -of ./dto -t mysql -h 127.0.0.1 -d bwa -u root -p secret -pn dto
+tables-to-go -v -of ./sql/dto -t mysql -h 127.0.0.1 -d bwa -u root -p secret -pn dto
 
 ```
 
