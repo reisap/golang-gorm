@@ -1,11 +1,12 @@
 package user
 
 import (
+	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
 )
 
-func TestUserRepository(t *testing.T) {
+func TestUserSaveRepository(t *testing.T) {
 
 	userModel := User{
 		Name:           "rambo",
@@ -19,4 +20,15 @@ func TestUserRepository(t *testing.T) {
 		UpdatedAt:      time.Time{},
 	}
 	userRepository.Save(userModel)
+}
+
+func TestUserFindByEmail(t *testing.T) {
+	userEmail := "reisap@mail.com"
+	result, err := userRepository.FindByEmail(userEmail)
+	require.NoError(t, err)
+	require.NotEmpty(t, result)
+	//if err != nil {
+	//	fmt.Println("Error find this email")
+	//}
+	//fmt.Println(result)
 }

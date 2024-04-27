@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -24,6 +25,8 @@ func TestServiceLoginUser(t *testing.T) {
 		Email:    "reisap@mail.com",
 		Password: "lucubgt",
 	}
-	userService.Login(loginUserInput)
+	result, err := userService.Login(loginUserInput)
+	require.NoError(t, err)
+	require.NotEmpty(t, result)
 
 }
