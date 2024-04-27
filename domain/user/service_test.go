@@ -20,7 +20,7 @@ func TestServiceRegisterUser(t *testing.T) {
 
 func TestServiceLoginUser(t *testing.T) {
 
-	//login service
+	//login service success
 	loginUserInput := LoginUserInput{
 		Email:    "reisap@mail.com",
 		Password: "lucubgt",
@@ -28,5 +28,14 @@ func TestServiceLoginUser(t *testing.T) {
 	result, err := userService.Login(loginUserInput)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
+
+	//login service email not found
+	loginEmailNotFound := LoginUserInput{
+		Email:    "ngkketemu@mail.com",
+		Password: "lucubgt",
+	}
+	resultNotFound, errNotFound := userService.Login(loginEmailNotFound)
+	require.Error(t, errNotFound)
+	require.Empty(t, resultNotFound)
 
 }

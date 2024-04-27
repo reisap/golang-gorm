@@ -23,12 +23,20 @@ func TestUserSaveRepository(t *testing.T) {
 }
 
 func TestUserFindByEmail(t *testing.T) {
-	userEmail := "reisap@mail.com"
+	//success
+	userEmail := "rambo@rambo.com"
 	result, err := userRepository.FindByEmail(userEmail)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
-	//if err != nil {
-	//	fmt.Println("Error find this email")
+
+	//not success email not found
+	userEmailNotFound := "emailngkada@mail.com"
+	resultNotFound, errFound := userRepository.FindByEmail(userEmailNotFound)
+	//if errFound != nil {
+	//fmt.Println("Error find this email", errFound)
 	//}
-	//fmt.Println(result)
+	//fmt.Println(resultNotFound)
+	require.Error(t, errFound)
+	require.Empty(t, resultNotFound)
+
 }
