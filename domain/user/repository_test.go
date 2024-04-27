@@ -9,10 +9,10 @@ import (
 func TestUserSaveRepository(t *testing.T) {
 
 	userModel := User{
-		Name:           "rambo",
+		Name:           "akandidelete",
 		Occupation:     "anggota",
-		Email:          "rambo@rambo.com",
-		PasswordHash:   "hashsah",
+		Email:          "akandidelete@rambo.com",
+		PasswordHash:   "anggota",
 		AvatarFileName: "",
 		Role:           "",
 		Token:          "",
@@ -24,7 +24,7 @@ func TestUserSaveRepository(t *testing.T) {
 
 func TestUserFindByEmail(t *testing.T) {
 	//success
-	userEmail := "rambo@rambo.com"
+	userEmail := "akandidelete@rambo.com"
 	result, err := userRepository.FindByEmail(userEmail)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
@@ -39,4 +39,11 @@ func TestUserFindByEmail(t *testing.T) {
 	require.Error(t, errFound)
 	require.Empty(t, resultNotFound)
 
+}
+
+func TestUserDeleteByEmail(t *testing.T) {
+	userEmail := "akandidelete@rambo.com"
+	result, err := userRepository.DeleteUserByEmail(userEmail)
+	require.NoError(t, err)
+	require.Empty(t, result)
 }
