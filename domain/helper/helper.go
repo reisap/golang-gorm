@@ -1,5 +1,10 @@
 package helper
 
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+)
+
 type Response struct {
 	Meta Meta        `json:"meta"`
 	Data interface{} `json:"data"`
@@ -24,4 +29,14 @@ func APIResponse(message string, code int, status string, data interface{}) Resp
 	}
 
 	return jsonResponse
+}
+
+func FormatValidationError(err error) map[string]any {
+	var error []string
+
+	for _, rangeError := range err.(validator.ValidationErrors) {
+		error = append(error, rangeError.Error())
+	}
+	messageError := gin.H{"error": error}
+	return messageError
 }
