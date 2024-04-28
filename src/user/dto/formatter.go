@@ -1,7 +1,5 @@
 package dto
 
-import "bwastartup/src/user"
-
 type UserFormatter struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
@@ -10,7 +8,7 @@ type UserFormatter struct {
 	Token      string `json:"token"`
 }
 
-func FormatUser(user user.User, token string) UserFormatter {
+func FormatUser(user User, token string) UserFormatter {
 	formatter := UserFormatter{
 		ID:         user.ID,
 		Name:       user.Name,

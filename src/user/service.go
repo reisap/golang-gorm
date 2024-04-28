@@ -7,10 +7,10 @@ import (
 )
 
 type Service interface {
-	RegisterUser(input dto.RegisterUserInput) (User, error)
-	Login(input dto.LoginUserInput) (User, error)
+	RegisterUser(input dto.RegisterUserInput) (dto.User, error)
+	Login(input dto.LoginUserInput) (dto.User, error)
 	IsEmailAvailable(input dto.CheckEmailInput) (bool, error)
-	SaveAvatarUser(ID int, fileLocation string) (User, error)
+	SaveAvatarUser(ID int, fileLocation string) (dto.User, error)
 }
 
 type service struct {
@@ -21,8 +21,8 @@ func NewService(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) RegisterUser(input dto.RegisterUserInput) (User, error) {
-	user := User{}
+func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
+	user := dto.User{}
 	user.Name = input.Name
 	user.Occupation = input.Occupation
 	user.Email = input.Email
@@ -40,7 +40,7 @@ func (s *service) RegisterUser(input dto.RegisterUserInput) (User, error) {
 	return newUser, nil
 }
 
-func (s *service) Login(input dto.LoginUserInput) (User, error) {
+func (s *service) Login(input dto.LoginUserInput) (dto.User, error) {
 	email := input.Email
 	password := input.Password
 
@@ -72,7 +72,7 @@ func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 
 }
 
-func (s *service) SaveAvatarUser(ID int, fileLocation string) (User, error) {
+func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) {
 	user, err := s.repository.FindUserById(ID)
 	if err != nil {
 		return user, err

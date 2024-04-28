@@ -4,7 +4,7 @@ import (
 	"bwastartup/src/campaigns"
 	"bwastartup/src/campaigns_images"
 	"bwastartup/src/transactions"
-	"bwastartup/src/user"
+	"bwastartup/src/user/dto"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -42,7 +42,7 @@ func ConnectDatabase() {
 }
 
 func AutoMigrateDB() {
-	err := DB.AutoMigrate(&user.User{}, &campaigns.Campaign{}, &campaigns_images.CampaignImage{}, &transactions.Transactions_table{})
+	err := DB.AutoMigrate(&dto.User{}, &campaigns.Campaign{}, &campaigns_images.CampaignImage{}, &transactions.Transactions_table{})
 
 	if err != nil {
 		fmt.Println(err)

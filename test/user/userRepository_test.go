@@ -1,7 +1,7 @@
 package user
 
 import (
-	"bwastartup/src/user"
+	"bwastartup/src/user/dto"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -9,7 +9,7 @@ import (
 
 func TestUserSaveRepository(t *testing.T) {
 
-	userModel := user.User{
+	userModel := dto.User{
 		Name:           "akandidelete",
 		Occupation:     "anggota",
 		Email:          "akandidelete@rambo.com",

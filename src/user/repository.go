@@ -1,14 +1,17 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"bwastartup/src/user/dto"
+	"gorm.io/gorm"
+)
 
 type Repository interface {
-	Create(user User) (User, error)
-	FindByEmail(email string) (User, error)
-	DeleteUserByEmail(email string) (User, error)
+	Create(user dto.User) (dto.User, error)
+	FindByEmail(email string) (dto.User, error)
+	DeleteUserByEmail(email string) (dto.User, error)
 
-	FindUserById(id int) (User, error)
-	UpdateUser(user User) (User, error)
+	FindUserById(id int) (dto.User, error)
+	UpdateUser(user dto.User) (dto.User, error)
 }
 
 // digunakan untuk initialize
@@ -19,7 +22,7 @@ type repository struct {
 func NewRepository(db *gorm.DB) Repository { //*repository
 	return &repository{db: db}
 }
-func (r *repository) Create(user User) (User, error) {
+func (r *repository) Create(user dto.User) (dto.User, error) {
 	err := r.db.Create(&user).Error
 	if err != nil {
 		return user, err
@@ -28,8 +31,8 @@ func (r *repository) Create(user User) (User, error) {
 	return user, nil
 
 }
-func (r *repository) FindByEmail(email string) (User, error) {
-	var user User
+func (r *repository) FindByEmail(email string) (dto.User, error) {
+	var user dto.User
 	err := r.db.Where("email=?", email).First(&user).Error
 	if err != nil {
 		return user, err
@@ -37,18 +40,18 @@ func (r *repository) FindByEmail(email string) (User, error) {
 	return user, nil
 }
 
-func (r *repository) DeleteUserByEmail(email string) (User, error) {
+func (r *repository) DeleteUserByEmail(email string) (dto.User, error) {
 	//biasanya untuk hal ini bukan delete tapi update berupa flag
 	//hanya sekedar test agar proses testing bisa lebih real
-	var user User
+	var user dto.User
 	err := r.db.Where("email=?", email).Delete(&user).Error
 	if err != nil {
 		return user, err
 	}
 	return user, nil
 }
-func (r *repository) FindUserById(id int) (User, error) {
-	var user User
+func (r *repository) FindUserById(id int) (dto.User, error) {
+	var user dto.User
 	err := r.db.Where("id=?", id).Find(&user).Error
 	if err != nil {
 		return user, err
@@ -57,7 +60,7 @@ func (r *repository) FindUserById(id int) (User, error) {
 
 }
 
-func (r *repository) UpdateUser(user User) (User, error) {
+func (r *repository) UpdateUser(user dto.User) (dto.User, error) {
 	err := r.db.Save(&user).Error
 	if err != nil {
 		return user, err
