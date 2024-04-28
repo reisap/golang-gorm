@@ -4,6 +4,7 @@ import (
 	"bwastartup/domain/auth"
 	"bwastartup/domain/helper"
 	"bwastartup/domain/user"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -105,6 +106,43 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 	}
 
 	response := helper.APIResponse(metaMessage, http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
+
+}
+
+func (h *userHandler) UploadAvatar(c *gin.Context) {
+	//tidak perlu bikin struct karena berupa form file
+	file, err := c.FormFile("avatar")
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		messageError := gin.H{"errors": errors}
+		response := helper.APIResponse("Avatar filename not found in form", http.StatusBadRequest, "error", messageError)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	//userId seharusnya dapat dari jwt
+	userId := 1
+	path := fmt.Sprintf("images/%d-%s", userId, file.Filename)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		messageError := gin.H{"errors": errors}
+		response := helper.APIResponse("Cannot upload avatar into directory", http.StatusBadRequest, "error", messageError)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	_, err = h.userService.SaveAvatarUser(userId, path)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		messageError := gin.H{"errors": errors}
+		response := helper.APIResponse("Cannot upload avatar", http.StatusBadRequest, "error", messageError)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := gin.H{"is_uploaded": true}
+	response := helper.APIResponse("Avatar success uploaded", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 
 }

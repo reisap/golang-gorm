@@ -40,3 +40,12 @@ check json empty in golang
 ```
     err := json.Unmarshal([]byte(`{}`), &jsonData1)
 ```
+
+perbedaan save dan update pada golang with gorm library
+```
+    //untuk proses save/create/insert pada gorm menggunakan method/fungsi create contohnya
+    err := db.Create(&user).Error
+    
+    //untuk proses update/edit pada golang menggunakan gorm contohnya
+    err := db.Save(&user).Error
+```
