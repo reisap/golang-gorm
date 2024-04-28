@@ -21,6 +21,7 @@ func (r *repository) Save(user User) (User, error) {
 	if err != nil {
 		return user, err
 	}
+
 	return user, nil
 
 }

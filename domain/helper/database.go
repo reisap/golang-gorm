@@ -22,6 +22,7 @@ func ConnectDatabase() {
 		panic("Could not connect with the database!")
 	}
 	fmt.Println("Database Connected")
+
 }
 
 func AutoMigrateDB() {
