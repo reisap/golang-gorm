@@ -23,3 +23,7 @@
 ## Database Design
 
 ![Database Design](./bwacourse.png)
+
+## Run Code
+    - make start //docker must be running first
+    - make migrate-up //migration database (optional) you can using in code based

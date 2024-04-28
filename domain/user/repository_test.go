@@ -19,7 +19,7 @@ func TestUserSaveRepository(t *testing.T) {
 		CreatedAt:      time.Time{},
 		UpdatedAt:      time.Time{},
 	}
-	result, err := userRepository.Save(userModel)
+	result, err := userRepository.Create(userModel)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
 }
