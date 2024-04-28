@@ -14,7 +14,9 @@ func TestServiceRegisterUser(t *testing.T) {
 		Email:      "akandidelete@rambo.com",
 		Password:   "anggota",
 	}
-	userService.RegisterUser(registerUserInput)
+	result, err := userService.RegisterUser(registerUserInput)
+	require.NoError(t, err)
+	require.NotEmpty(t, result)
 
 }
 

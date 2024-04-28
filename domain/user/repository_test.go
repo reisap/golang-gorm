@@ -19,7 +19,9 @@ func TestUserSaveRepository(t *testing.T) {
 		CreatedAt:      time.Time{},
 		UpdatedAt:      time.Time{},
 	}
-	userRepository.Save(userModel)
+	result, err := userRepository.Save(userModel)
+	require.NoError(t, err)
+	require.NotEmpty(t, result)
 }
 
 func TestUserFindByEmail(t *testing.T) {

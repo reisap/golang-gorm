@@ -5,6 +5,7 @@ import (
 	"bwastartup/domain/handler"
 	"bwastartup/domain/helper"
 	"bwastartup/domain/user"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,5 +22,8 @@ func main() {
 	api.POST("/users", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
 
-	router.Run(":8080")
+	err := router.Run(":8080")
+	if err != nil {
+		fmt.Println("Error running API in port", err)
+	}
 }

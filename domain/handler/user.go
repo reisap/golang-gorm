@@ -65,7 +65,14 @@ func (h *userHandler) Login(c *gin.Context) {
 		return
 	}
 	generateToken, err := h.authService.GenerateToken(loginUser.ID)
+	if err != nil {
+		messageError := gin.H{"errors": err.Error()}
+		response := helper.APIResponse("Login account failed", http.StatusBadRequest, "error", messageError)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 	formatter := user.FormatUser(loginUser, generateToken)
 	response := helper.APIResponse("Login success", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
+
 }
