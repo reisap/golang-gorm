@@ -9,6 +9,7 @@ import (
 func Setup(router *gin.Engine, limiter *limiter.Limiter) {
 	api := router.Group("/api/v1")
 	api.Use(tollbooth_gin.LimitHandler(limiter))
+
 	UserRoutes(api)
 	CampaignRoutes(api)
 }

@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"bwastartup/domain/auth"
-	"bwastartup/domain/helper"
-	"bwastartup/domain/user"
+	"bwastartup/src/auth"
+	"bwastartup/src/helper"
+	"bwastartup/src/user"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

@@ -1,10 +1,10 @@
 package mysql
 
 import (
-	"bwastartup/domain/campaigns"
-	"bwastartup/domain/campaigns_images"
-	"bwastartup/domain/transactions"
-	"bwastartup/domain/user"
+	"bwastartup/src/campaigns"
+	"bwastartup/src/campaigns_images"
+	"bwastartup/src/transactions"
+	"bwastartup/src/user"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

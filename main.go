@@ -1,17 +1,17 @@
 package main
 
 import (
-	"bwastartup/domain/helper/mysql"
-	"bwastartup/domain/helper/redis"
 	v1 "bwastartup/routes/v1"
 	v2 "bwastartup/routes/v2"
+	"bwastartup/src/helper/mysql"
+	"bwastartup/src/helper/redis"
 	"fmt"
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/didip/tollbooth"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/zigitn/compress"
 	"os"
 )
 
@@ -29,8 +29,9 @@ func main() {
 	router := gin.Default()
 	router.Use(helmet.Default())
 	router.Use(cors.Default())
-	router.Use(compress.New(compress.UseAllBestSpeed()))
-	limiter := tollbooth.NewLimiter(100, nil) //global limitter
+	router.Use(gzip.Gzip(gzip.BestSpeed))
+
+	limiter := tollbooth.NewLimiter(1000, nil) //global limitter
 
 	v1.Setup(router, limiter)
 	v2.Setup(router)

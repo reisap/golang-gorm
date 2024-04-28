@@ -1,7 +1,7 @@
 package user
 
 import (
-	"bwastartup/domain/helper/mysql"
+	"bwastartup/src/helper/mysql"
 )
 
 var userRepository Repository //var userRepository *repository
