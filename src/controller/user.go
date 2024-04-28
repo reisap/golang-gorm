@@ -9,16 +9,16 @@ import (
 	"net/http"
 )
 
-type userHandler struct {
+type userController struct {
 	userService user.Service
 	authService auth.Service
 }
 
-func NewUserHandler(userService user.Service, authService auth.Service) *userHandler {
-	return &userHandler{userService: userService, authService: authService}
+func NewUserController(userService user.Service, authService auth.Service) *userController {
+	return &userController{userService: userService, authService: authService}
 }
 
-func (h *userHandler) RegisterUser(c *gin.Context) {
+func (h *userController) RegisterUser(c *gin.Context) {
 	var input user.RegisterUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -48,7 +48,7 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *userHandler) Login(c *gin.Context) {
+func (h *userController) Login(c *gin.Context) {
 	var input user.LoginUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -78,7 +78,7 @@ func (h *userHandler) Login(c *gin.Context) {
 
 }
 
-func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
+func (h *userController) CheckEmailAvailability(c *gin.Context) {
 	var input user.CheckEmailInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -110,7 +110,7 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 
 }
 
-func (h *userHandler) UploadAvatar(c *gin.Context) {
+func (h *userController) UploadAvatar(c *gin.Context) {
 	//tidak perlu bikin struct karena berupa form file
 	file, err := c.FormFile("avatar")
 	if err != nil {

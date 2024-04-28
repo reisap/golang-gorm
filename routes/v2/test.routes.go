@@ -1,15 +1,12 @@
 package v2
 
-import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"net/http"
-	"time"
-)
+import "github.com/gin-gonic/gin"
 
 func TestRoutes(api *gin.RouterGroup) {
 	api.GET("/test", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong "+fmt.Sprint(time.Now().Unix()))
+		c.JSON(200, gin.H{
+			"message": "test api",
+		})
 	})
 
 }

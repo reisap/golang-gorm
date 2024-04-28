@@ -12,13 +12,13 @@ func UserRoutes(api *gin.RouterGroup) {
 	userRepository := user.NewRepository(mysql.DB)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
-	userHandler := controller.NewUserHandler(userService, authService)
+	userController := controller.NewUserController(userService, authService)
 
 	// Per route middleware, you can add as many as you desire.
 	//api.GET("/benchmark", MyBenchLogger(), benchEndpoint)
 
-	api.POST("/users", userHandler.RegisterUser)
-	api.POST("/sessions", userHandler.Login)
-	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
-	api.POST("/avatar", userHandler.UploadAvatar)
+	api.POST("/users", userController.RegisterUser)
+	api.POST("/sessions", userController.Login)
+	api.POST("/email_checkers", userController.CheckEmailAvailability)
+	api.POST("/avatar", userController.UploadAvatar)
 }
