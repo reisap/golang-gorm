@@ -7,7 +7,7 @@
 
 ## Development Separated into 2 branch
     - main
-    use domain model into package terinspirasi dari NestJS
+    use domain model into package inspired by NestJS
 
     - research 
     use MVC model architecture into package
