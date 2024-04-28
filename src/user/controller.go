@@ -1,25 +1,25 @@
-package controller
+package user
 
 import (
 	"bwastartup/src/auth"
 	"bwastartup/src/helper"
-	"bwastartup/src/user"
+	"bwastartup/src/user/dto"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 type userController struct {
-	userService user.Service
+	userService Service
 	authService auth.Service
 }
 
-func NewUserController(userService user.Service, authService auth.Service) *userController {
+func NewUserController(userService Service, authService auth.Service) *userController {
 	return &userController{userService: userService, authService: authService}
 }
 
 func (h *userController) RegisterUser(c *gin.Context) {
-	var input user.RegisterUserInput
+	var input dto.RegisterUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 
@@ -43,13 +43,13 @@ func (h *userController) RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
-	formatter := user.FormatUser(registerUser, generateToken)
+	formatter := dto.FormatUser(registerUser, generateToken)
 	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *userController) Login(c *gin.Context) {
-	var input user.LoginUserInput
+	var input dto.LoginUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
@@ -72,14 +72,14 @@ func (h *userController) Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	formatter := user.FormatUser(loginUser, generateToken)
+	formatter := dto.FormatUser(loginUser, generateToken)
 	response := helper.APIResponse("Login success", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 
 }
 
 func (h *userController) CheckEmailAvailability(c *gin.Context) {
-	var input user.CheckEmailInput
+	var input dto.CheckEmailInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		messageError := gin.H{"errors": err.Error()}
@@ -99,7 +99,7 @@ func (h *userController) CheckEmailAvailability(c *gin.Context) {
 	data := gin.H{"is_available": isEmailAvailable}
 
 	var metaMessage string
-	if isEmailAvailable == true {
+	if isEmailAvailable {
 		metaMessage = "Email is available"
 	} else {
 		metaMessage = "Email has been register"

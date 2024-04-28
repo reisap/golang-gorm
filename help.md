@@ -18,7 +18,7 @@ generate with generatedb.go with package "gorm.io/gen"
     go run generatedb.go
 ```
 
-disable error docker with golang
+linter golang for disable error docker build golang
 ```
     sudo snap install golangci-lint
     

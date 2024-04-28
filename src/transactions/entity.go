@@ -12,8 +12,8 @@ type Transactions_table struct {
 	CampaignID int       `gorm:"column:campaign_id" json:"campaign_id"`
 	UserID     int       `gorm:"column:user_id" json:"user_id"`
 	Amount     int       `gorm:"column:amount" json:"amount"`
-	Status     string    `gorm:"column:status" gorm:"type:varchar(25)" json:"status"`
-	Code       string    `gorm:"column:code" gorm:"type:varchar(255)" json:"code"`
+	Status     string    `gorm:"column:status type:varchar(25)" json:"status"`
+	Code       string    `gorm:"column:code type:varchar(255)" json:"code"`
 	CreatedAt  time.Time `gorm:"column:created_at" json:"created_at"`
 	UpdatedAt  time.Time `gorm:"column:updated_at" json:"updated_at"`
 }

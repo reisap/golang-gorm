@@ -1,14 +1,15 @@
 package user
 
 import (
+	"bwastartup/src/user/dto"
 	"errors"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Service interface {
-	RegisterUser(input RegisterUserInput) (User, error)
-	Login(input LoginUserInput) (User, error)
-	IsEmailAvailable(input CheckEmailInput) (bool, error)
+	RegisterUser(input dto.RegisterUserInput) (User, error)
+	Login(input dto.LoginUserInput) (User, error)
+	IsEmailAvailable(input dto.CheckEmailInput) (bool, error)
 	SaveAvatarUser(ID int, fileLocation string) (User, error)
 }
 
@@ -20,7 +21,7 @@ func NewService(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) RegisterUser(input RegisterUserInput) (User, error) {
+func (s *service) RegisterUser(input dto.RegisterUserInput) (User, error) {
 	user := User{}
 	user.Name = input.Name
 	user.Occupation = input.Occupation
@@ -39,7 +40,7 @@ func (s *service) RegisterUser(input RegisterUserInput) (User, error) {
 	return newUser, nil
 }
 
-func (s *service) Login(input LoginUserInput) (User, error) {
+func (s *service) Login(input dto.LoginUserInput) (User, error) {
 	email := input.Email
 	password := input.Password
 
@@ -59,16 +60,14 @@ func (s *service) Login(input LoginUserInput) (User, error) {
 	return user, nil
 }
 
-func (s *service) IsEmailAvailable(input CheckEmailInput) (bool, error) {
+func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 	email := input.Email
 	_, err := s.repository.FindByEmail(email)
 	emailRegister := errors.New("email found")
 	if err != nil {
 		return true, nil
-	} else {
-
-		return false, emailRegister
 	}
+
 	return false, emailRegister
 
 }

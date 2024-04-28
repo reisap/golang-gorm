@@ -1,6 +1,7 @@
 package user
 
 import (
+	"bwastartup/src/user/dto"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -8,12 +9,13 @@ import (
 func TestServiceRegisterUser(t *testing.T) {
 
 	//register service
-	registerUserInput := RegisterUserInput{
+	registerUserInput := dto.RegisterUserInput{
 		Name:       "akandidelete",
 		Occupation: "anggota",
 		Email:      "akandidelete@rambo.com",
 		Password:   "anggota",
 	}
+
 	result, err := userService.RegisterUser(registerUserInput)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
@@ -23,16 +25,17 @@ func TestServiceRegisterUser(t *testing.T) {
 func TestServiceLoginUser(t *testing.T) {
 
 	//login service success
-	loginUserInput := LoginUserInput{
+	loginUserInput := dto.LoginUserInput{
 		Email:    "akandidelete@rambo.com",
 		Password: "anggota",
 	}
+
 	result, err := userService.Login(loginUserInput)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
 
 	//login service email not found
-	loginEmailNotFound := LoginUserInput{
+	loginEmailNotFound := dto.LoginUserInput{
 		Email:    "ngkketemu@mail.com",
 		Password: "lucubgt",
 	}

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"bwastartup/src/user"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -8,7 +9,7 @@ import (
 
 func TestUserSaveRepository(t *testing.T) {
 
-	userModel := User{
+	userModel := user.User{
 		Name:           "akandidelete",
 		Occupation:     "anggota",
 		Email:          "akandidelete@rambo.com",
@@ -19,6 +20,7 @@ func TestUserSaveRepository(t *testing.T) {
 		CreatedAt:      time.Time{},
 		UpdatedAt:      time.Time{},
 	}
+
 	result, err := userRepository.Create(userModel)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
@@ -27,6 +29,7 @@ func TestUserSaveRepository(t *testing.T) {
 func TestUserFindByEmail(t *testing.T) {
 	//success
 	userEmail := "akandidelete@rambo.com"
+
 	result, err := userRepository.FindByEmail(userEmail)
 	require.NoError(t, err)
 	require.NotEmpty(t, result)
@@ -45,6 +48,7 @@ func TestUserFindByEmail(t *testing.T) {
 
 func TestUserDeleteByEmail(t *testing.T) {
 	userEmail := "akandidelete@rambo.com"
+
 	result, err := userRepository.DeleteUserByEmail(userEmail)
 	require.NoError(t, err)
 	require.Empty(t, result)
