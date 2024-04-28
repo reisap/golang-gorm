@@ -1,4 +1,4 @@
-package transactions
+package dto
 
 import (
 	"time"

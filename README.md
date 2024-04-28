@@ -27,3 +27,7 @@
 ## Run Code
     - make start //docker must be running first
     - make migrate-up //migration database (optional) you can using in code based
+
+## Lint Code
+    - GOFLAGS=-buildvcs=false golangci-lint run -v
+    debug if any code "Import cycle not allowed", if you can pass this linter you are ready to go. ENJOY !!!

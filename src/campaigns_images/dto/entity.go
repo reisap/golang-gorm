@@ -1,4 +1,4 @@
-package campaigns_images
+package dto
 
 import (
 	"time"

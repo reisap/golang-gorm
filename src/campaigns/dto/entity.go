@@ -1,4 +1,4 @@
-package campaigns
+package dto
 
 import (
 	"time"
