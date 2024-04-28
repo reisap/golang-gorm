@@ -10,6 +10,7 @@ import (
 	"github.com/didip/tollbooth"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"os"
@@ -30,6 +31,7 @@ func main() {
 	router.Use(helmet.Default())
 	router.Use(cors.Default())
 	router.Use(gzip.Gzip(gzip.BestSpeed))
+	pprof.Register(router)
 
 	limiter := tollbooth.NewLimiter(1000, nil) //global limitter
 
