@@ -7,12 +7,18 @@ import (
 	v2 "bwastartup/routes/v2"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"os"
 )
 
 func main() {
+	errEnv := godotenv.Load()
+	if errEnv != nil {
+		panic("Failed to load env file")
+	}
 	mysql.ConnectDatabase()
 	mysql.AutoMigrateDB()
+
 	redis.SetupRedis()
 	redis.SetupCacheChannel()
 
@@ -20,7 +26,9 @@ func main() {
 	v1.Setup(router)
 	v2.Setup(router)
 
-	err := router.Run(os.Getenv("PORT"))
+	var port = ":" + os.Getenv("PORT")
+	fmt.Println("ini port golang ", port)
+	err := router.Run(port)
 	if err != nil {
 		fmt.Println("Error running API in port", err)
 	}

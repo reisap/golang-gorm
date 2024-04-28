@@ -1,7 +1,7 @@
 package user
 
 type UserFormatter struct {
-	ID         int32  `json:"id"`
+	ID         int    `json:"id"`
 	Name       string `json:"name"`
 	Occupation string `json:"occupation"`
 	Email      string `json:"email"`
