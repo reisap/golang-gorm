@@ -3,7 +3,7 @@ package auth
 import "github.com/dgrijalva/jwt-go"
 
 type Service interface {
-	GenerateToken(userID int32) (string, error)
+	GenerateToken(userID int) (string, error)
 	//ValidateToken(token string) (*jwt.Token, error)
 }
 
@@ -16,7 +16,7 @@ func NewService() *jwtService {
 	return &jwtService{}
 }
 
-func (s *jwtService) GenerateToken(userID int32) (string, error) {
+func (s *jwtService) GenerateToken(userID int) (string, error) {
 	claim := jwt.MapClaims{}
 	claim["userID"] = userID
 
