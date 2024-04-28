@@ -3,17 +3,20 @@ package main
 import (
 	"bwastartup/domain/auth"
 	"bwastartup/domain/handler"
-	"bwastartup/domain/helper"
+	"bwastartup/domain/helper/mysql"
+	"bwastartup/domain/helper/redis"
 	"bwastartup/domain/user"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	helper.ConnectDatabase()
-	helper.AutoMigrateDB()
+	mysql.ConnectDatabase()
+	mysql.AutoMigrateDB()
+	redis.SetupRedis()
+	redis.SetupCacheChannel()
 
-	userRepository := user.NewRepository(helper.DB)
+	userRepository := user.NewRepository(mysql.DB)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	userHandler := handler.NewUserHandler(userService, authService)

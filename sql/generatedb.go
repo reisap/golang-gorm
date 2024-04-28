@@ -24,7 +24,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println("connection database success !!")
+	fmt.Println("connection mysql success !!")
 	g.UseDB(gormdb) // reuse your gorm db
 	//g.ApplyBasic(entity.User{})
 	transactions := g.GenerateModelAs("transactions", "Transactions_table")

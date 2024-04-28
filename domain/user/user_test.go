@@ -1,12 +1,14 @@
 package user
 
-import "bwastartup/domain/helper"
+import (
+	"bwastartup/domain/helper/mysql"
+)
 
 var userRepository Repository //var userRepository *repository
 var userService Service       //var userService *service
 
 func init() {
-	helper.ConnectDatabase()
-	userRepository = NewRepository(helper.DB)
+	mysql.ConnectDatabase()
+	userRepository = NewRepository(mysql.DB)
 	userService = NewService(userRepository)
 }

@@ -1,4 +1,4 @@
-package helper
+package mysql
 
 import (
 	"bwastartup/domain/campaigns"
@@ -19,7 +19,7 @@ func ConnectDatabase() {
 	//dsn := "root:secret@tcp(127.0.0.1:3306)/bwa?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("Could not connect with the database!")
+		panic("Could not connect with the mysql!")
 	}
 	fmt.Println("Database Connected")
 
