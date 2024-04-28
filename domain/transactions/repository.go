@@ -1,4 +1,4 @@
-package campaigns
+package transactions
 
 import "gorm.io/gorm"
 
@@ -9,6 +9,6 @@ type repository struct {
 	db *gorm.DB
 }
 
-func NewCampaignsRepository(db *gorm.DB) *repository {
+func NewTransactionsRepository(db *gorm.DB) Repository {
 	return &repository{db: db}
 }

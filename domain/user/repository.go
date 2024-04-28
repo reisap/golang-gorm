@@ -31,7 +31,7 @@ func (r *repository) FindByEmail(email string) (User, error) {
 	if err != nil {
 		return user, err
 	}
-	return user, err
+	return user, nil
 }
 
 func (r *repository) DeleteUserByEmail(email string) (User, error) {
@@ -42,5 +42,5 @@ func (r *repository) DeleteUserByEmail(email string) (User, error) {
 	if err != nil {
 		return user, err
 	}
-	return user, err
+	return user, nil
 }

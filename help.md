@@ -30,4 +30,13 @@ disable error docker with golang
 auto reload untuk golang sama seperti nodemon
 ````
     go install github.com/cosmtrek/air@latest
+    air init //generate edit .air.toml
+    
+    //edit file in .air.toml if using golang >=1.22
+    cmd = "go build -buildvcs=false -o ./tmp/main ."
 ````
+
+check json empty in golang
+```
+    err := json.Unmarshal([]byte(`{}`), &jsonData1)
+```
