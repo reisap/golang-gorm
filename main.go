@@ -11,6 +11,7 @@ import (
 
 func main() {
 	helper.ConnectDatabase()
+	helper.AutoMigrateDB()
 
 	userRepository := user.NewRepository(helper.DB)
 	userService := user.NewService(userRepository)

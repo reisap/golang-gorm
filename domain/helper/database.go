@@ -1,6 +1,10 @@
 package helper
 
 import (
+	"bwastartup/domain/campaigns"
+	"bwastartup/domain/campaigns_images"
+	"bwastartup/domain/transactions"
+	"bwastartup/domain/user"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -18,4 +22,8 @@ func ConnectDatabase() {
 		panic("Could not connect with the database!")
 	}
 	fmt.Println("Database Connected")
+}
+
+func AutoMigrateDB() {
+	DB.AutoMigrate(user.User{}, campaigns.Campaign{}, campaigns_images.CampaignImage{}, transactions.Transactions_table{})
 }
