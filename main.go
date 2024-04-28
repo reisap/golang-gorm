@@ -1,13 +1,13 @@
 package main
 
 import (
-	"bwastartup/domain/auth"
-	"bwastartup/domain/handler"
 	"bwastartup/domain/helper/mysql"
 	"bwastartup/domain/helper/redis"
-	"bwastartup/domain/user"
+	v1 "bwastartup/routes/v1"
+	v2 "bwastartup/routes/v2"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"os"
 )
 
 func main() {
@@ -16,19 +16,11 @@ func main() {
 	redis.SetupRedis()
 	redis.SetupCacheChannel()
 
-	userRepository := user.NewRepository(mysql.DB)
-	userService := user.NewService(userRepository)
-	authService := auth.NewService()
-	userHandler := handler.NewUserHandler(userService, authService)
-
 	router := gin.Default()
-	api := router.Group("/api/v1")
-	api.POST("/users", userHandler.RegisterUser)
-	api.POST("/sessions", userHandler.Login)
-	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
-	api.POST("/avatar", userHandler.UploadAvatar)
+	v1.Setup(router)
+	v2.Setup(router)
 
-	err := router.Run(":8080")
+	err := router.Run(os.Getenv("PORT"))
 	if err != nil {
 		fmt.Println("Error running API in port", err)
 	}
