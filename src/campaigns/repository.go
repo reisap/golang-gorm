@@ -1,14 +1,27 @@
 package campaigns
 
-import "gorm.io/gorm"
+import (
+	"bwastartup/src/campaigns/dto"
+	abstractRepo "bwastartup/src/helper/repository"
+
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 }
 
 type repository struct {
-	db *gorm.DB
+	db           *gorm.DB
+	AbstractRepo abstractRepo.AbstractRepository[dto.Campaign]
 }
 
 func NewCampaignsRepository(db *gorm.DB) *repository {
-	return &repository{db: db}
+	model := new(dto.Campaign)
+	return &repository{
+		db: db,
+		AbstractRepo: abstractRepo.AbstractRepository[dto.Campaign]{
+			DB:     db,
+			Entity: model,
+		},
+	}
 }
