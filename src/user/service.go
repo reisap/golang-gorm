@@ -81,7 +81,7 @@ func (s *service) Login(input dto.LoginUserInput) (dto.User, error) {
 	}
 
 	if user.ID == 0 {
-		return user, errors.New("User not found on that email")
+		return user, errors.New("user not found on that email")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
@@ -110,7 +110,7 @@ func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) 
 	}
 
 	if user.ID == 0 {
-		return user, errors.New("No user found on that ID")
+		return user, errors.New("no user found on that ID")
 	}
 
 	user.AvatarFileName = fileLocation
