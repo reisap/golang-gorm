@@ -127,7 +127,7 @@ func (h *userController) UploadAvatar(c *gin.Context) {
 		return
 	}
 	//userId seharusnya dapat dari jwt
-	userId := 100
+	userId := 1
 	path := fmt.Sprintf("images/%d-%s", userId, file.Filename)
 
 	err = c.SaveUploadedFile(file, path)
