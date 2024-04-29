@@ -20,6 +20,6 @@ func init() {
 		panic("Could not connect with the mysql!")
 	}
 	fmt.Println("Database Connected")
-	userRepository = user.NewRepository(DbTest)
+	userRepository := user.NewRepository(DbTest)
 	userService = user.NewService(userRepository)
 }

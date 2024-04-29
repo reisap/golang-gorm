@@ -11,13 +11,14 @@ type Service interface {
 	Login(input dto.LoginUserInput) (dto.User, error)
 	IsEmailAvailable(input dto.CheckEmailInput) (bool, error)
 	SaveAvatarUser(ID int, fileLocation string) (dto.User, error)
+	UserPaging(limit int, page int) (any, error)
 }
 
 type service struct {
-	repository Repository
+	repository *repository
 }
 
-func NewService(repository Repository) *service {
+func NewService(repository *repository) *service {
 	return &service{repository: repository}
 }
 
@@ -32,12 +33,20 @@ func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
 	}
 	user.PasswordHash = string(passwordHash)
 	user.Role = "user"
-	newUser, err := s.repository.Create(user)
-	if err != nil {
-		return newUser, err
-	}
 
-	return newUser, nil
+	//newUser, err := s.repository.Create(user)
+	//if err != nil {
+	//	return newUser, err
+	//}
+	//
+	//return newUser, nil
+
+	err = s.repository.abstractRepo.Create(&user) //user -> jika langsung pakai itu akan mendapatkan interface tapi bukan isinya
+	if err != nil {
+		return user, err
+	}
+	return user, nil
+
 }
 
 func (s *service) Login(input dto.LoginUserInput) (dto.User, error) {
@@ -69,6 +78,16 @@ func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 	}
 
 	return false, emailRegister
+
+}
+
+func (s *service) UserPaging(limit int, page int) (any, error) {
+
+	list, err := s.repository.abstractRepo.FindPaging(limit, page)
+	if err != nil {
+		return list, err
+	}
+	return list, nil
 
 }
 

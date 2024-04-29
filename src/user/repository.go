@@ -1,6 +1,7 @@
 package user
 
 import (
+	abstractRepo "bwastartup/src/helper/repository"
 	"bwastartup/src/user/dto"
 	"gorm.io/gorm"
 )
@@ -16,11 +17,18 @@ type Repository interface {
 
 // digunakan untuk initialize
 type repository struct {
-	db *gorm.DB
+	db           *gorm.DB
+	abstractRepo abstractRepo.AbstractRepository[dto.User]
 }
 
-func NewRepository(db *gorm.DB) Repository { //*repository
-	return &repository{db: db}
+func NewRepository(db *gorm.DB) *repository { //*repository
+
+	return &repository{
+		db: db,
+		abstractRepo: abstractRepo.AbstractRepository[dto.User]{
+			DB: db,
+		},
+	}
 }
 func (r *repository) Create(user dto.User) (dto.User, error) {
 	err := r.db.Create(&user).Error

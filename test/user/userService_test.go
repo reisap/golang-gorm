@@ -2,6 +2,8 @@ package user
 
 import (
 	"bwastartup/src/user/dto"
+	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -43,4 +45,12 @@ func TestServiceLoginUser(t *testing.T) {
 	require.Error(t, errNotFound)
 	require.Empty(t, resultNotFound)
 
+}
+
+func TestPaginationUser(t *testing.T) {
+	result, err := userService.UserPaging(1, 10)
+	b, err := json.Marshal(result)
+	fmt.Println(string(b))
+	require.NoError(t, err)
+	require.NotEmpty(t, result)
 }
