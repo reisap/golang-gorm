@@ -98,6 +98,10 @@ func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) 
 		return user, err
 	}
 
+	if user.ID == 0 {
+		return user, errors.New("No user found on that ID")
+	}
+
 	user.AvatarFileName = fileLocation
 	updateUser, err := s.repository.UpdateUser(user)
 	if err != nil {

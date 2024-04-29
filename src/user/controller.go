@@ -127,21 +127,19 @@ func (h *userController) UploadAvatar(c *gin.Context) {
 		return
 	}
 	//userId seharusnya dapat dari jwt
-	userId := 1
+	userId := 100
 	path := fmt.Sprintf("images/%d-%s", userId, file.Filename)
 
 	err = c.SaveUploadedFile(file, path)
 	if err != nil {
-		errors := helper.FormatValidationError(err)
-		messageError := gin.H{"errors": errors}
+		messageError := gin.H{"errors": err.Error()}
 		response := helper.APIResponse("Cannot upload avatar into directory", http.StatusBadRequest, "error", messageError)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 	_, err = h.userService.SaveAvatarUser(userId, path)
 	if err != nil {
-		errors := helper.FormatValidationError(err)
-		messageError := gin.H{"errors": errors}
+		messageError := gin.H{"errors": err.Error()}
 		response := helper.APIResponse("Cannot upload avatar", http.StatusBadRequest, "error", messageError)
 		c.JSON(http.StatusBadRequest, response)
 		return
