@@ -4,7 +4,7 @@ migrate command
     migrate create -ext sql -dir sql/migration -seq init_schema
 ```
 
-generate table into struct (tapi ini cara standart karena tetap manual buat functionnya)
+generate table into struct (but this is standard because still needed manual process function)
 
 ```
     go install github.com/fraenky8/tables-to-go@master
@@ -22,12 +22,12 @@ linter golang for disable error docker build golang
 ```
     sudo snap install golangci-lint
     
-    //check code program golang untuk build di docker atau manual
+    //check code program golang for build in docker or manual
     GOFLAGS=-buildvcs=false golangci-lint run -v
 
 ```
 
-auto reload untuk golang sama seperti nodemon
+auto reload for golang looks like nodemon
 ````
     go install github.com/cosmtrek/air@latest
     air init //generate edit .air.toml
@@ -41,7 +41,7 @@ check json empty in golang
     err := json.Unmarshal([]byte(`{}`), &jsonData1)
 ```
 
-perbedaan save dan update pada golang with gorm library
+different between save and update in golang with gorm library
 ```
     //untuk proses save/create/insert pada gorm menggunakan method/fungsi create contohnya
     err := db.Create(&user).Error
