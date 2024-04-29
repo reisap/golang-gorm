@@ -22,6 +22,15 @@ func NewService(repository *repository) *service {
 	return &service{repository: repository}
 }
 
+func (s *service) UserPaging(limit int, page int) (any, error) {
+
+	list, err := s.repository.abstractRepo.FindPaging(limit, page)
+	if err != nil {
+		return list, err
+	}
+	return list, nil
+
+}
 func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
 	user := dto.User{}
 	user.Name = input.Name
@@ -78,16 +87,6 @@ func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 	}
 
 	return false, emailRegister
-
-}
-
-func (s *service) UserPaging(limit int, page int) (any, error) {
-
-	list, err := s.repository.abstractRepo.FindPaging(limit, page)
-	if err != nil {
-		return list, err
-	}
-	return list, nil
 
 }
 
