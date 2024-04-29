@@ -17,17 +17,17 @@ type Repository interface {
 
 // digunakan untuk initialize
 type repository struct {
-	db           *gorm.DB
-	abstractRepo abstractRepo.AbstractRepository[dto.User]
+	db               *gorm.DB
+	userAbstractRepo abstractRepo.AbstractRepository[dto.User]
 }
 
 func NewRepository(db *gorm.DB) *repository { //*repository
 	model := new(dto.User)
 	return &repository{
 		db: db,
-		abstractRepo: abstractRepo.AbstractRepository[dto.User]{
+		userAbstractRepo: abstractRepo.AbstractRepository[dto.User]{
 			DB:     db,
-			Entity: *model,
+			Entity: model,
 		},
 	}
 }

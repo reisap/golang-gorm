@@ -8,7 +8,7 @@ import (
 
 type AbstractRepository[model any] struct {
 	DB     *gorm.DB
-	Entity model
+	Entity *model
 	paging Paging[model]
 }
 
@@ -22,9 +22,14 @@ func (global *AbstractRepository[model]) Create(entity *model) error {
 
 }
 
-func (global *AbstractRepository[T]) Find(entity *T) (T, error) {
+func (global *AbstractRepository[model]) Update(entity *model, id int) error {
+
+	return global.DB.Where("id = ?", id).Save(&entity).Error
+}
+
+func (global *AbstractRepository[T]) Find() (T, error) {
 	var model T
-	err := global.DB.Find(entity).Error
+	err := global.DB.Find(&model).Error
 	if err != nil {
 		return model, err
 	}
@@ -40,17 +45,15 @@ func (global *AbstractRepository[T]) FindById(id any) (T, error) {
 	return model, nil
 }
 
-func (global *AbstractRepository[T]) Update(entity *T, id int) error {
-	return global.DB.Where("id = ?", id).Save(entity).Error
-}
-
-func (global *AbstractRepository[T]) Delete(entity *T, id int) error {
-	return global.DB.Where("id = ?", id).Delete(entity).Error
+func (global *AbstractRepository[T]) Delete(id int) error {
+	var model T
+	return global.DB.Where("id = ?", id).Delete(&model).Error
 }
 
 func (global *AbstractRepository[T]) CountById(id any) (int64, error) {
 	var total int64
-	err := global.DB.Model(new(T)).Where("id = ?", id).Count(&total).Error
+	var model T
+	err := global.DB.Model(&model).Where("id = ?", id).Count(&total).Error
 	return total, err
 }
 

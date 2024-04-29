@@ -3,7 +3,6 @@ package user
 import (
 	"bwastartup/src/user/dto"
 	"errors"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -25,7 +24,7 @@ func NewService(repository *repository) *service {
 
 func (s *service) UserPaging(limit int, page int) (any, error) {
 
-	list, err := s.repository.abstractRepo.FindPaging(limit, page)
+	list, err := s.repository.userAbstractRepo.FindPaging(limit, page)
 	if err != nil {
 		return list, err
 	}
@@ -53,7 +52,7 @@ func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
 	//return newUser, nil
 
 	//using abstract repository
-	err = s.repository.abstractRepo.Create(&user) //user
+	err = s.repository.userAbstractRepo.Create(&user) //user
 	if err != nil {
 		return user, err
 	}
@@ -94,11 +93,11 @@ func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 }
 
 func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) {
-	user, err := s.repository.abstractRepo.FindById(ID) //s.repository.FindUserById(ID)
+	user, err := s.repository.userAbstractRepo.FindById(ID) //s.repository.FindUserById(ID)
 	if err != nil {
 		return user, err
 	}
-	fmt.Println("user list id", user)
+
 	if user.ID == 0 {
 		return user, errors.New("No user found on that ID")
 	}
