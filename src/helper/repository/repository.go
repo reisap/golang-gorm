@@ -32,8 +32,8 @@ func (global *AbstractRepository[model]) UpdateAll(entity *model) error {
 	return global.DB.Save(&entity).Error
 }
 
-func (global *AbstractRepository[T]) Find() (T, error) {
-	var model T
+func (global *AbstractRepository[T]) Find() ([]T, error) {
+	var model []T
 	err := global.DB.Find(&model).Error
 	if err != nil {
 		return model, err
@@ -66,8 +66,8 @@ func (global *AbstractRepository[model]) FindPaging(limit int, page int) (Paging
 	var err error
 
 	paging := paginator.Paging{}
-	paging.Page = limit
-	paging.Limit = page
+	paging.Page = page
+	paging.Limit = limit
 
 	global.paging.Pagination, err = paginator.Pages(&paginator.Param{
 		DB:     global.DB,

@@ -11,7 +11,8 @@ type Service interface {
 	Login(input dto.LoginUserInput) (dto.User, error)
 	IsEmailAvailable(input dto.CheckEmailInput) (bool, error)
 	SaveAvatarUser(ID int, fileLocation string) (dto.User, error)
-	UserPaging(limit int, page int) (any, error)
+	FindUserPaging(limit int, page int) (any, error)
+	FindAllUser() (any, error)
 }
 
 type service struct {
@@ -22,9 +23,18 @@ func NewService(repository *repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) UserPaging(limit int, page int) (any, error) {
+func (s *service) FindUserPaging(limit int, page int) (any, error) {
 
 	list, err := s.repository.userAbstractRepo.FindPaging(limit, page)
+	if err != nil {
+		return list, err
+	}
+	return list, nil
+
+}
+func (s *service) FindAllUser() (any, error) {
+
+	list, err := s.repository.userAbstractRepo.Find()
 	if err != nil {
 		return list, err
 	}
