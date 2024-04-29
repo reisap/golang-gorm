@@ -5,9 +5,10 @@ import (
 	"bwastartup/src/helper"
 	"bwastartup/src/user/dto"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type userController struct {
