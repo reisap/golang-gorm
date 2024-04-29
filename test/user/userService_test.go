@@ -4,8 +4,9 @@ import (
 	"bwastartup/src/user/dto"
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestServiceRegisterUser(t *testing.T) {
@@ -49,7 +50,7 @@ func TestServiceLoginUser(t *testing.T) {
 
 func TestPaginationUser(t *testing.T) {
 
-	result, err := userService.UserPaging(1, 10)
+	result, err := userService.FindUserPaging(1, 10)
 	require.NoError(t, err)
 	b, errJson := json.Marshal(result)
 	fmt.Println(string(b))
