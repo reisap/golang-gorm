@@ -9,6 +9,7 @@
     - Version of api 
     you can separated routing v1,v2,... etc for development
     - dockerize your code
+    - Controller, Service, Repository, Entity (model) Yap !!! this separated you can focus which one your code on there, no more spaghetti code :D looks like uncle BOB said
     - compress response
     - helmet for default security
     - cors
