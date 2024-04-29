@@ -13,7 +13,7 @@ services:
       - redis
   db:
     image: mysql:5.7.22
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_PASSWORD: ${DB_USER}
