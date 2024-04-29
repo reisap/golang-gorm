@@ -27,6 +27,11 @@ func (global *AbstractRepository[model]) Update(entity *model, id int) error {
 	return global.DB.Where("id = ?", id).Save(&entity).Error
 }
 
+func (global *AbstractRepository[model]) UpdateAll(entity *model) error {
+
+	return global.DB.Save(&entity).Error
+}
+
 func (global *AbstractRepository[T]) Find() (T, error) {
 	var model T
 	err := global.DB.Find(&model).Error
