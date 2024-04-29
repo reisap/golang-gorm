@@ -8,8 +8,6 @@ import (
 
 type AbstractRepository[model any] struct {
 	DB     *gorm.DB
-	limit  int
-	page   int
 	paging Paging[model]
 }
 
@@ -45,12 +43,6 @@ func (global *AbstractRepository[T]) CountById(id any) (int64, error) {
 	return total, err
 }
 
-func paginatedResult(db *gorm.DB) *gorm.DB {
-	offset := (1) * 10
-
-	return db.Offset(offset).
-		Limit(10)
-}
 func (global *AbstractRepository[model]) FindPaging(limit int, page int) (Paging[model], error) {
 	var err error
 
