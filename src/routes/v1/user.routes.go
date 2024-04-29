@@ -15,7 +15,7 @@ func UserRoutes(api *gin.RouterGroup) {
 
 	// Per route middleware, you can add as many as you desire.
 	//api.GET("/benchmark", MyBenchLogger(), benchEndpoint)
-
+	api.GET("/users", userController.ListUserPaging)
 	api.POST("/users", userController.RegisterUser)
 	api.POST("/sessions", userController.Login)
 	api.POST("/email_checkers", userController.CheckEmailAvailability)

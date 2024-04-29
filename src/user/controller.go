@@ -18,6 +18,12 @@ func NewUserController(userService Service, authService auth.Service) *userContr
 	return &userController{userService: userService, authService: authService}
 }
 
+func (h *userController) ListUserPaging(c *gin.Context) {
+	user, _ := h.userService.UserPaging(1, 10)
+	c.JSON(http.StatusOK, user)
+
+}
+
 func (h *userController) RegisterUser(c *gin.Context) {
 	var input dto.RegisterUserInput
 	err := c.ShouldBindJSON(&input)
