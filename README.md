@@ -9,7 +9,7 @@
     - Version of api 
     you can separated routing v1,v2,... etc for development
     - dockerize your code
-    - compress response for callback api
+    - compress response
     - helmet for default security
     - cors
     - pprof

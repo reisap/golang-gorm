@@ -27,7 +27,9 @@ func main() {
 	redis.SetupRedis()
 	redis.SetupCacheChannel()
 
+	//default framework using gin
 	router := gin.Default()
+
 	router.Use(helmet.Default())
 	router.Use(cors.Default())
 	router.Use(gzip.Gzip(gzip.BestSpeed))
