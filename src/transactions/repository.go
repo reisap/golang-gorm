@@ -1,14 +1,27 @@
 package transactions
 
-import "gorm.io/gorm"
+import (
+	abstractRepo "bwastartup/src/helper/repository"
+	"bwastartup/src/transactions/dto"
+
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 }
 
 type repository struct {
-	db *gorm.DB
+	db           *gorm.DB
+	AbstractRepo abstractRepo.AbstractRepository[dto.Transactions_table]
 }
 
 func NewTransactionsRepository(db *gorm.DB) Repository {
-	return &repository{db: db}
+	model := new(dto.Transactions_table)
+	return &repository{
+		db: db,
+		AbstractRepo: abstractRepo.AbstractRepository[dto.Transactions_table]{
+			DB:     db,
+			Entity: model,
+		},
+	}
 }
