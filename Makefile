@@ -8,4 +8,7 @@ migrate-down:
 	migrate -path sql/migration -database "mysql://root:secret@tcp(localhost:3306)/bwa?x-tls-insecure-skip-verify=false" -verbose down
 test :
 	go test -v -cover ./test/...
-.PHONY: start stop migrate-up migrate-down test
+linter :
+	GOFLAGS=-buildvcs=false golangci-lint run -v
+
+.PHONY: start stop migrate-up migrate-down test linter

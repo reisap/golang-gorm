@@ -50,8 +50,9 @@ func TestServiceLoginUser(t *testing.T) {
 func TestPaginationUser(t *testing.T) {
 
 	result, err := userService.UserPaging(1, 10)
-	b, err := json.Marshal(result)
-	fmt.Println(string(b))
 	require.NoError(t, err)
+	b, errJson := json.Marshal(result)
+	fmt.Println(string(b))
+	require.NoError(t, errJson)
 	require.NotEmpty(t, string(b))
 }
