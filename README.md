@@ -1,4 +1,4 @@
-# Create template clean architecture for golang development
+# Create template clean architecture for golang development inspired by NestJS 
 
     - Golang 1.22
     - gorm (Mysql)
