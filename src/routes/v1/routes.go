@@ -12,4 +12,5 @@ func Setup(router *gin.Engine, limiter *limiter.Limiter) {
 
 	UserRoutes(api)
 	CampaignRoutes(api)
+	TransactionRoutes(api)
 }

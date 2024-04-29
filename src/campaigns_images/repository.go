@@ -12,14 +12,14 @@ type Repository interface {
 
 type repository struct {
 	db           *gorm.DB
-	AbstractRepo abstractRepo.AbstractRepository[dto.CampaignImage]
+	abstractRepo abstractRepo.AbstractRepository[dto.CampaignImage]
 }
 
 func NewCampaignImagesRepository(db *gorm.DB) Repository {
 	model := new(dto.CampaignImage)
 	return &repository{
 		db: db,
-		AbstractRepo: abstractRepo.AbstractRepository[dto.CampaignImage]{
+		abstractRepo: abstractRepo.AbstractRepository[dto.CampaignImage]{
 			DB:     db,
 			Entity: model,
 		},

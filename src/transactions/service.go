@@ -1,12 +1,33 @@
 package transactions
 
 type Service interface {
+	FindPagingTbl(limit int, page int) (any, error)
+	FindAllTbl() (any, error)
 }
 
 type service struct {
-	repository Repository
+	repository *repository
 }
 
-func NewTransactionsService(repository Repository) Service {
-	return &service{repository}
+func NewService(repository *repository) *service {
+	return &service{repository: repository}
+}
+
+func (s *service) FindPagingTbl(limit int, page int) (any, error) {
+
+	list, err := s.repository.abstractRepo.FindPaging(limit, page)
+	if err != nil {
+		return list, err
+	}
+	return list, nil
+
+}
+func (s *service) FindAllTbl() (any, error) {
+
+	list, err := s.repository.abstractRepo.Find()
+	if err != nil {
+		return list, err
+	}
+	return list, nil
+
 }

@@ -12,14 +12,14 @@ type Repository interface {
 
 type repository struct {
 	db           *gorm.DB
-	AbstractRepo abstractRepo.AbstractRepository[dto.Transactions_table]
+	abstractRepo abstractRepo.AbstractRepository[dto.Transactions_table]
 }
 
-func NewTransactionsRepository(db *gorm.DB) Repository {
+func NewRepository(db *gorm.DB) *repository { //*repository
 	model := new(dto.Transactions_table)
 	return &repository{
 		db: db,
-		AbstractRepo: abstractRepo.AbstractRepository[dto.Transactions_table]{
+		abstractRepo: abstractRepo.AbstractRepository[dto.Transactions_table]{
 			DB:     db,
 			Entity: model,
 		},
