@@ -43,6 +43,7 @@ func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
 	user.PasswordHash = string(passwordHash)
 	user.Role = "user"
 
+	//using 1:1 repository
 	//newUser, err := s.repository.Create(user)
 	//if err != nil {
 	//	return newUser, err
@@ -50,7 +51,8 @@ func (s *service) RegisterUser(input dto.RegisterUserInput) (dto.User, error) {
 	//
 	//return newUser, nil
 
-	err = s.repository.abstractRepo.Create(&user) //user -> jika langsung pakai itu akan mendapatkan interface tapi bukan isinya
+	//using abstract repository
+	err = s.repository.abstractRepo.Create(&user) //user
 	if err != nil {
 		return user, err
 	}
@@ -91,10 +93,11 @@ func (s *service) IsEmailAvailable(input dto.CheckEmailInput) (bool, error) {
 }
 
 func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) {
-	user, err := s.repository.FindUserById(ID)
+	user, err := s.repository.abstractRepo.FindById(ID) //s.repository.FindUserById(ID)
 	if err != nil {
 		return user, err
 	}
+
 	user.AvatarFileName = fileLocation
 	updateUser, err := s.repository.UpdateUser(user)
 	if err != nil {

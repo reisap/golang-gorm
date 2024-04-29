@@ -8,6 +8,7 @@ import (
 
 type AbstractRepository[model any] struct {
 	DB     *gorm.DB
+	Entity any
 	paging Paging[model]
 }
 
@@ -21,12 +22,22 @@ func (global *AbstractRepository[model]) Create(entity *model) error {
 
 }
 
-func (global *AbstractRepository[model]) Find(entity *model) error {
-	return global.DB.Find(entity).Error
+func (global *AbstractRepository[T]) Find(entity *T) (T, error) {
+	var model T
+	err := global.DB.Find(entity).Error
+	if err != nil {
+		return model, err
+	}
+	return model, nil
 }
 
-func (global *AbstractRepository[T]) FindById(entity *T, id any) error {
-	return global.DB.Where("id = ?", id).Take(entity).Error
+func (global *AbstractRepository[T]) FindById(id any) (T, error) {
+	var model T
+	err := global.DB.Where("id = ?", id).Find(global.Entity).Error
+	if err != nil {
+		return model, err
+	}
+	return model, nil
 }
 
 func (global *AbstractRepository[T]) Update(entity *T, id int) error {

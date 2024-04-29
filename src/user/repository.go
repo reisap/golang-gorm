@@ -26,7 +26,8 @@ func NewRepository(db *gorm.DB) *repository { //*repository
 	return &repository{
 		db: db,
 		abstractRepo: abstractRepo.AbstractRepository[dto.User]{
-			DB: db,
+			DB:     db,
+			Entity: new(dto.User),
 		},
 	}
 }
