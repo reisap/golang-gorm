@@ -15,7 +15,7 @@ type repository struct {
 	abstractRepo abstractRepo.AbstractRepository[dto.CampaignImage]
 }
 
-func NewCampaignImagesRepository(db *gorm.DB) Repository {
+func NewCampaignImagesRepository(db *gorm.DB) *repository {
 	model := new(dto.CampaignImage)
 	return &repository{
 		db: db,

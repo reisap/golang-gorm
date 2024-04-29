@@ -1,11 +1,15 @@
 package v1
 
-import "github.com/gin-gonic/gin"
+import (
+	"bwastartup/src/campaigns"
+	"bwastartup/src/helper/mysql"
+	"github.com/gin-gonic/gin"
+)
 
 func CampaignRoutes(api *gin.RouterGroup) {
-	api.GET("/campaign", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Campaign test api",
-		})
-	})
+	repository := campaigns.NewCampaignsRepository(mysql.DB)
+	service := campaigns.NewCampaignsService(repository)
+	controller := campaigns.NewCampaignsController(service)
+
+	api.GET("/campaign", controller.ListPaging)
 }
