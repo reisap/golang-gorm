@@ -3,6 +3,7 @@ package user
 import (
 	"bwastartup/src/user/dto"
 	"errors"
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -97,7 +98,7 @@ func (s *service) SaveAvatarUser(ID int, fileLocation string) (dto.User, error) 
 	if err != nil {
 		return user, err
 	}
-
+	fmt.Println("user list id", user)
 	if user.ID == 0 {
 		return user, errors.New("No user found on that ID")
 	}

@@ -10,7 +10,6 @@ import (
 	"github.com/didip/tollbooth"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
-	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"os"
@@ -22,7 +21,7 @@ func main() {
 		panic("Failed to load env file")
 	}
 	mysql.ConnectDatabase()
-	mysql.AutoMigrateDB() //make sure success
+	//mysql.AutoMigrateDB() //make sure success
 
 	redis.SetupRedis()
 	redis.SetupCacheChannel()
@@ -33,7 +32,7 @@ func main() {
 	router.Use(helmet.Default())
 	router.Use(cors.Default())
 	router.Use(gzip.Gzip(gzip.BestSpeed))
-	pprof.Register(router)
+	//pprof.Register(router)
 
 	limiter := tollbooth.NewLimiter(1000, nil) //global limitter
 

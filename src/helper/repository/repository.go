@@ -8,7 +8,7 @@ import (
 
 type AbstractRepository[model any] struct {
 	DB     *gorm.DB
-	Entity any
+	Entity model
 	paging Paging[model]
 }
 
@@ -33,7 +33,7 @@ func (global *AbstractRepository[T]) Find(entity *T) (T, error) {
 
 func (global *AbstractRepository[T]) FindById(id any) (T, error) {
 	var model T
-	err := global.DB.Where("id = ?", id).Find(global.Entity).Error
+	err := global.DB.Where("id = ?", id).Find(&model).Error
 	if err != nil {
 		return model, err
 	}

@@ -22,12 +22,12 @@ type repository struct {
 }
 
 func NewRepository(db *gorm.DB) *repository { //*repository
-
+	model := new(dto.User)
 	return &repository{
 		db: db,
 		abstractRepo: abstractRepo.AbstractRepository[dto.User]{
 			DB:     db,
-			Entity: new(dto.User),
+			Entity: *model,
 		},
 	}
 }
