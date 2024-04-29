@@ -4,6 +4,7 @@
     - gorm (Mysql)
     - Redis
     - Air (like nodemon for developement)
+    - https://dbdiagram.io/ (tools for speed up create ERD and export sql)
 
 ## Features
     - Version of api 
