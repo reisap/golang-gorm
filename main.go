@@ -1,10 +1,10 @@
 package main
 
 import (
-	"bwastartup/src/helper/mysql"
-	"bwastartup/src/helper/redis"
-	"bwastartup/src/routes/v1"
-	"bwastartup/src/routes/v2"
+	"bwastartup/domain/helper/mysql"
+	"bwastartup/domain/helper/redis"
+	"bwastartup/domain/routes/v1"
+	"bwastartup/domain/routes/v2"
 	"fmt"
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/didip/tollbooth"

@@ -1,9 +1,9 @@
 package user
 
 import (
-	"bwastartup/src/auth"
-	"bwastartup/src/helper"
-	"bwastartup/src/user/dto"
+	"bwastartup/domain/auth"
+	"bwastartup/domain/helper"
+	"bwastartup/domain/user/dto"
 	"fmt"
 	"net/http"
 	"strconv"

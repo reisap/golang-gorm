@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"bwastartup/src/auth"
-	"bwastartup/src/helper/mysql"
-	"bwastartup/src/user"
+	"bwastartup/domain/auth"
+	"bwastartup/domain/helper/mysql"
+	"bwastartup/domain/user"
 	"github.com/gin-gonic/gin"
 )
 

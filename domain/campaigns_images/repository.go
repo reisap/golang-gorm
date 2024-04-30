@@ -1,8 +1,8 @@
 package campaigns_images
 
 import (
-	"bwastartup/src/campaigns_images/dto"
-	abstractRepo "bwastartup/src/helper/repository"
+	"bwastartup/domain/campaigns_images/dto"
+	abstractRepo "bwastartup/domain/helper/repository"
 
 	"gorm.io/gorm"
 )

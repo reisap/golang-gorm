@@ -1,8 +1,8 @@
 package campaigns
 
 import (
-	"bwastartup/src/campaigns/dto"
-	abstractRepo "bwastartup/src/helper/repository"
+	"bwastartup/domain/campaigns/dto"
+	abstractRepo "bwastartup/domain/helper/repository"
 
 	"gorm.io/gorm"
 )

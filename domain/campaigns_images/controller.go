@@ -1,7 +1,7 @@
 package campaigns_images
 
 import (
-	"bwastartup/src/helper"
+	"bwastartup/domain/helper"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"

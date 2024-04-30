@@ -1,7 +1,7 @@
 package user
 
 import (
-	"bwastartup/src/user/dto"
+	"bwastartup/domain/user/dto"
 	"errors"
 
 	"golang.org/x/crypto/bcrypt"

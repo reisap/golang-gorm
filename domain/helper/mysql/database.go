@@ -1,10 +1,10 @@
 package mysql
 
 import (
-	dto2 "bwastartup/src/campaigns/dto"
-	dto3 "bwastartup/src/campaigns_images/dto"
-	dto4 "bwastartup/src/transactions/dto"
-	"bwastartup/src/user/dto"
+	dto2 "bwastartup/domain/campaigns/dto"
+	dto3 "bwastartup/domain/campaigns_images/dto"
+	dto4 "bwastartup/domain/transactions/dto"
+	"bwastartup/domain/user/dto"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

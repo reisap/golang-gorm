@@ -1,8 +1,8 @@
 package user
 
 import (
-	abstractRepo "bwastartup/src/helper/repository"
-	"bwastartup/src/user/dto"
+	abstractRepo "bwastartup/domain/helper/repository"
+	"bwastartup/domain/user/dto"
 	"gorm.io/gorm"
 )
 

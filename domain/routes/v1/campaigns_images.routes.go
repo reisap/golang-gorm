@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"bwastartup/src/campaigns_images"
-	"bwastartup/src/helper/mysql"
+	"bwastartup/domain/campaigns_images"
+	"bwastartup/domain/helper/mysql"
 
 	"github.com/gin-gonic/gin"
 )

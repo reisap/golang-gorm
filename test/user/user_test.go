@@ -1,7 +1,7 @@
 package user
 
 import (
-	"bwastartup/src/user"
+	"bwastartup/domain/user"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

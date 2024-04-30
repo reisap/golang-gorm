@@ -1,8 +1,8 @@
 package transactions
 
 import (
-	abstractRepo "bwastartup/src/helper/repository"
-	"bwastartup/src/transactions/dto"
+	abstractRepo "bwastartup/domain/helper/repository"
+	"bwastartup/domain/transactions/dto"
 
 	"gorm.io/gorm"
 )

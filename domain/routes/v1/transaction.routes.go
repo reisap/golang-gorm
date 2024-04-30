@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"bwastartup/src/helper/mysql"
-	"bwastartup/src/transactions"
+	"bwastartup/domain/helper/mysql"
+	"bwastartup/domain/transactions"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"bwastartup/src/user/dto"
+	"bwastartup/domain/user/dto"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
